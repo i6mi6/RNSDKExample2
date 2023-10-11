@@ -15,12 +15,16 @@
 		2B7D2B3C2AD4AA3000D69196 /* RNSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B7D2B362AD4AA3000D69196 /* RNSDK.framework */; };
 		2B7D2B3D2AD4AA3000D69196 /* RNSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B7D2B362AD4AA3000D69196 /* RNSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B7D2B432AD4AA4A00D69196 /* RNSDKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B422AD4AA4A00D69196 /* RNSDKViewController.swift */; };
-		2B7D2B442AD4AA7900D69196 /* RNSDKViewController.swift in Headers */ = {isa = PBXBuildFile; fileRef = 2B7D2B422AD4AA4A00D69196 /* RNSDKViewController.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B7D2B442AD4AA7900D69196 /* RNSDKViewController.swift in Headers */ = {isa = PBXBuildFile; fileRef = 2B7D2B422AD4AA4A00D69196 /* RNSDKViewController.swift */; settings = {ATTRIBUTES = (Private, ); }; };
 		2B7D2B6B2AD719F900D69196 /* StoreConnectionModuleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B612AD708E500D69196 /* StoreConnectionModuleBridge.m */; };
 		2B7D2B6C2AD719F900D69196 /* StoreConnectionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B632AD70AF700D69196 /* StoreConnectionModule.swift */; };
 		2B7D2B732AD749FD00D69196 /* StoreConnectionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B632AD70AF700D69196 /* StoreConnectionModule.swift */; };
 		2B7D2B742AD749FD00D69196 /* StoreConnectionModuleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B612AD708E500D69196 /* StoreConnectionModuleBridge.m */; };
 		2B7D2B752AD749FD00D69196 /* StoreConnectionModule-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B7D2B652AD70C6300D69196 /* StoreConnectionModule-Bridging-Header.h */; };
+		2B7D2B7B2AD75CF900D69196 /* RNSDKCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B7A2AD75CF900D69196 /* RNSDKCore.swift */; };
+		2B7D2B7D2AD75D5E00D69196 /* RNSDKCoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2B7C2AD75D5E00D69196 /* RNSDKCoreView.swift */; };
+		2B7D2B7E2AD75DA200D69196 /* RNSDKCore.swift in Headers */ = {isa = PBXBuildFile; fileRef = 2B7D2B7A2AD75CF900D69196 /* RNSDKCore.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B7D2B7F2AD75DA200D69196 /* RNSDKCoreView.swift in Headers */ = {isa = PBXBuildFile; fileRef = 2B7D2B7C2AD75D5E00D69196 /* RNSDKCoreView.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8AA1F3EC8ED7E657B5FD87CC /* Pods_RNSDKExample2_RNSDKExample2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AB0AED12A0E5646CC1C4B8 /* Pods_RNSDKExample2_RNSDKExample2Tests.framework */; };
 		A24602E3B090CE0F69D22115 /* Pods_RNSDKExample2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFAE61826D6F7B714A176BD7 /* Pods_RNSDKExample2.framework */; };
@@ -74,6 +78,8 @@
 		2B7D2B612AD708E500D69196 /* StoreConnectionModuleBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreConnectionModuleBridge.m; sourceTree = "<group>"; };
 		2B7D2B632AD70AF700D69196 /* StoreConnectionModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreConnectionModule.swift; sourceTree = "<group>"; };
 		2B7D2B652AD70C6300D69196 /* StoreConnectionModule-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StoreConnectionModule-Bridging-Header.h"; sourceTree = "<group>"; };
+		2B7D2B7A2AD75CF900D69196 /* RNSDKCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSDKCore.swift; sourceTree = "<group>"; };
+		2B7D2B7C2AD75D5E00D69196 /* RNSDKCoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSDKCoreView.swift; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RNSDKExample2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNSDKExample2.debug.xcconfig"; path = "Target Support Files/Pods-RNSDKExample2/Pods-RNSDKExample2.debug.xcconfig"; sourceTree = "<group>"; };
 		550548A5983C14E4CC27EC2E /* Pods_RNSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5709B34CF0A7D63546082F79 /* Pods-RNSDKExample2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNSDKExample2.release.xcconfig"; path = "Target Support Files/Pods-RNSDKExample2/Pods-RNSDKExample2.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +160,8 @@
 			children = (
 				2B7D2B382AD4AA3000D69196 /* RNSDK.h */,
 				2B7D2B422AD4AA4A00D69196 /* RNSDKViewController.swift */,
+				2B7D2B7A2AD75CF900D69196 /* RNSDKCore.swift */,
+				2B7D2B7C2AD75D5E00D69196 /* RNSDKCoreView.swift */,
 			);
 			path = RNSDK;
 			sourceTree = "<group>";
@@ -223,6 +231,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B7D2B392AD4AA3000D69196 /* RNSDK.h in Headers */,
+				2B7D2B7E2AD75DA200D69196 /* RNSDKCore.swift in Headers */,
+				2B7D2B7F2AD75DA200D69196 /* RNSDKCoreView.swift in Headers */,
 				2B7D2B442AD4AA7900D69196 /* RNSDKViewController.swift in Headers */,
 				2B7D2B752AD749FD00D69196 /* StoreConnectionModule-Bridging-Header.h in Headers */,
 			);
@@ -539,8 +549,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B7D2B432AD4AA4A00D69196 /* RNSDKViewController.swift in Sources */,
+				2B7D2B7B2AD75CF900D69196 /* RNSDKCore.swift in Sources */,
 				2B7D2B732AD749FD00D69196 /* StoreConnectionModule.swift in Sources */,
 				2B7D2B742AD749FD00D69196 /* StoreConnectionModuleBridge.m in Sources */,
+				2B7D2B7D2AD75D5E00D69196 /* RNSDKCoreView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
