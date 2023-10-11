@@ -1,33 +1,38 @@
 import Foundation
 import UIKit
 
-class RNSDKCore {
+public class RNSDKCore {
     
     // Configuration for the SDK
-    struct Configuration {
+    public struct Configuration {
         let apiKey: String
         let onEvent: (([AnyHashable: Any]) -> Void)?
+        // Add a public initializer
+        public init(apiKey: String, onEvent: (([AnyHashable: Any]) -> Void)? = nil) {
+            self.apiKey = apiKey
+            self.onEvent = onEvent
+        }
     }
     
     // Possible errors for the SDK
-    enum SDKError: Error {
+    public enum SDKError: Error {
         case invalidAPIKey
         case unknownError
     }
     
-    enum PresentationMethod {
+    public enum PresentationMethod {
         case presentModally(on: UIViewController)
         case pushOnNavigationStack(navigationController: UINavigationController)
         case embedInTab(tabBarController: UITabBarController, at: Int?)
     }
     
     // Define a handler that the SDK uses
-    class SDKHandler {
+    public class SDKHandler {
         
         private var notificationName = Notification.Name("openUserScreen")
         private var onEvent: (([AnyHashable: Any]) -> Void)?
         
-        init(onEvent: (([AnyHashable: Any]) -> Void)?) {
+        public init(onEvent: (([AnyHashable: Any]) -> Void)?) {
             self.onEvent = onEvent
             setupNotificationObserver()
         }
@@ -41,10 +46,7 @@ class RNSDKCore {
         
         private func setupNotificationObserver() {
             NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
-                print("Received a notification!")
-                if let params = notification.userInfo,
-                   let userId = params["userId"] as? String {
-                    NSLog("Log from openUserController: \(userId)")
+                if let params = notification.userInfo {
                     self.onEvent?(params)
                 }
             }
@@ -55,7 +57,7 @@ class RNSDKCore {
         }
     
         // The method to open a UI based on the specified presentation method
-        func open(presentUsing method: PresentationMethod) {
+        public func open(presentUsing method: PresentationMethod) {
             let sdkUI = RNSDKViewController()
             
             switch method {
@@ -77,7 +79,7 @@ class RNSDKCore {
     }
     
     // Create a handler based on configuration
-    static func create(_ config: Configuration) -> Result<SDKHandler, SDKError> {
+    public static func create(_ config: Configuration) -> Result<SDKHandler, SDKError> {
         // Simulating an API key check
         guard config.apiKey == "VALID_API_KEY" else {
             return .failure(.invalidAPIKey)

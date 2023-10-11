@@ -25,9 +25,6 @@ class StoreConnectionModule: NSObject {
   
     @objc(sendNotification:params:)
     func sendNotification(notification: NSString, params: NSDictionary) {
-        NSLog("Log from sendNotification1: \(params)")
-        NSLog("Log from sendNotification2: \(notification)")
-      
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notification as String), object: nil, userInfo: params as? [AnyHashable: Any])
     }
 
