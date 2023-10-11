@@ -1,23 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {View, Text} from 'react-native';
+import {WebView} from 'react-native-webview';
 
 export default () => {
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
       }}>
-      <FastImage
-        style={{width: 326, height: 348}}
-        source={{
-          uri: 'https://cooklist.com/images/logo-desktop.png',
-        }}
-        resizeMode={FastImage.resizeMode.contain}
-      />
+      <WebView source={{uri: 'https://cooklist.com'}} style={{flex: 1}} />
+      <Text>Test webview</Text>
     </View>
   );
 };
