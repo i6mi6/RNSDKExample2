@@ -1,3 +1,7 @@
+//
+//  RNSDKCoreView.swift
+//  RNSDK
+//
 import SwiftUI
 
 public struct RNSDKCoreView: UIViewControllerRepresentable {

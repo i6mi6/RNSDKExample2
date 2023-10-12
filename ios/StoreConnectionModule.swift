@@ -1,28 +1,32 @@
 import Foundation
+import React
 import UIKit
 import AVFoundation
 
 @objc(StoreConnectionModule)
-class StoreConnectionModule: NSObject {
-//
-//    var callback: ((String) -> Void)?
-//
-//    init(callback: @escaping (String) -> Void) {
-//        self.callback = callback
-//        super.init()
-//    }
-//
-//    @objc(triggerCallback:)
-//    func triggerCallback(message: String) {
-//        NSLog("Log from triggerCallback: \(message)")
-//        callback?(message)
-//    }
+class StoreConnectionModule: RCTEventEmitter {
 
-    @objc(onStoreConnected:)
-    public func onStoreConnected(connectionStatus: String) {
-       NSLog("Log from onStoreConnected: \(connectionStatus)")
-     }
-  
+    private var observer: NSObjectProtocol?
+
+    override init() {
+        super.init()
+        
+        let notificationNameToObserve = Notification.Name("DataToReactNative")
+      
+        observer = NotificationCenter.default.addObserver(forName: notificationNameToObserve, object: nil, queue: .main) { notification in
+              if let params = notification.userInfo {
+                self.sendEvent(withName: "DataFromNative", body: params)
+              }
+          }
+        
+    }
+    
+    deinit {
+        if let observer = observer {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
     @objc(sendNotification:params:)
     func sendNotification(notification: NSString, params: NSDictionary) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notification as String), object: nil, userInfo: params as? [AnyHashable: Any])

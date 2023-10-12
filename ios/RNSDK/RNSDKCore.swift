@@ -1,3 +1,7 @@
+//
+//  RNSDKCode.swift
+//  RNSDK
+//
 import Foundation
 import UIKit
 
@@ -29,7 +33,7 @@ public class RNSDKCore {
     // Define a handler that the SDK uses
     public class SDKHandler {
         
-        private var notificationName = Notification.Name("openUserScreen")
+        private var notificationName = Notification.Name("store_credentials_event")
         private var onEvent: (([AnyHashable: Any]) -> Void)?
         
         public init(onEvent: (([AnyHashable: Any]) -> Void)?) {
@@ -55,7 +59,11 @@ public class RNSDKCore {
         private func removeNotificationObserver() {
             NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
         }
-    
+      
+        public func sendDataToReactNative(data: [AnyHashable: Any]) {
+            NotificationCenter.default.post(name: Notification.Name("DataToReactNative"), object: nil, userInfo: data)
+        }
+      
         // The method to open a UI based on the specified presentation method
         public func open(presentUsing method: PresentationMethod) {
             let sdkUI = RNSDKViewController()

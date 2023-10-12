@@ -1,15 +1,32 @@
 import React from 'react';
-import {View, Text, NativeModules, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  NativeModules,
+  TouchableOpacity,
+  NativeEventEmitter,
+} from 'react-native';
 import {WebView} from 'react-native-webview';
+import householdPurchases from './householdPurchases.json'
 const {StoreConnectionModule} = NativeModules;
 
 export default class App extends React.Component {
+  state = {
+    event: null,
+  };
+
   componentDidMount() {
-    // StoreConnectionModule.onStoreConnected('someStatus');
-    // setTimeout(() => {
-    //   const params = {rootTag: this.props.rootTag, userId: '525'};
-    //   StoreConnectionModule.sendNotification('openUserScreen', params);
-    // }, 1000);
+    this.eventEmitter = new NativeEventEmitter(StoreConnectionModule);
+    this.eventEmitter.addListener('DataFromNative', data => {
+      console.log(data);
+      this.setState({
+        event: JSON.stringify(data),
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.eventEmitter.removeAllListeners();
   }
 
   onConnect = () => {
@@ -18,8 +35,9 @@ export default class App extends React.Component {
       credentialsStatus: 'Verified',
       storeId: 3,
       userId: 525,
+      payload: householdPurchases,
     };
-    StoreConnectionModule.sendNotification('openUserScreen', params);
+    StoreConnectionModule.sendNotification('store_credentials_event', params);
   };
 
   onError = () => {
@@ -29,10 +47,11 @@ export default class App extends React.Component {
       storeId: 3,
       userId: null,
     };
-    StoreConnectionModule.sendNotification('openUserScreen', params);
+    StoreConnectionModule.sendNotification('store_credentials_event', params);
   };
 
   render() {
+    const {event} = this.state;
     return (
       <View
         style={{
@@ -42,6 +61,7 @@ export default class App extends React.Component {
         }}>
         {/* <WebView source={{uri: 'https://cooklist.com'}} style={{flex: 1}} /> */}
         <Text>Inside React Native!</Text>
+        <Text>{`Event: ${event}`}</Text>
         <TouchableOpacity
           onPress={this.onConnect}
           style={{padding: 10, backgroundColor: 'green'}}>
