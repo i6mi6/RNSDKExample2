@@ -7,11 +7,15 @@ import AVFoundation
 class StoreConnectionModule: RCTEventEmitter {
 
     private var observer: NSObjectProtocol?
+  
+    @objc override func supportedEvents() -> [String] {
+        return ["DataFromNative"]
+    }
 
     override init() {
         super.init()
         
-        let notificationNameToObserve = Notification.Name("DataToReactNative")
+        let notificationNameToObserve = Notification.Name("DataFromNative")
       
         observer = NotificationCenter.default.addObserver(forName: notificationNameToObserve, object: nil, queue: .main) { notification in
               if let params = notification.userInfo {

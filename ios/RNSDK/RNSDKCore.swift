@@ -61,7 +61,7 @@ public class RNSDKCore {
         }
       
         public func sendDataToReactNative(data: [AnyHashable: Any]) {
-            NotificationCenter.default.post(name: Notification.Name("DataToReactNative"), object: nil, userInfo: data)
+            NotificationCenter.default.post(name: Notification.Name("DataFromNative"), object: nil, userInfo: data)
         }
       
         // The method to open a UI based on the specified presentation method
