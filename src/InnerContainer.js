@@ -33,9 +33,11 @@ class InnerContainer extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>CooklistSDK Wrapper</Text>
-        {this.renderContent()}
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>CooklistSDK Wrapper</Text>
+          {this.renderContent()}
+        </View>
       </View>
     )
   }

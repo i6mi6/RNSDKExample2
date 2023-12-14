@@ -21,7 +21,7 @@
     "react-native-safe-area-context": "4.4.1",
     "react-native-webview": "^13.6.2",
     "recompose": "0.30.0",
-    "react-native-cooklist": "/Users/alexandervitanov/Projects/General/react-native-cooklist/react-native-cooklist-0.1.13-local.0.tgz"
+    "react-native-cooklist": "/Users/alexandervitanov/Projects/General/react-native-cooklist/react-native-cooklist-0.1.21-local.0.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

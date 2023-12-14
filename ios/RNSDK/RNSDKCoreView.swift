@@ -5,19 +5,22 @@
 import SwiftUI
 
 public struct RNSDKCoreView: UIViewControllerRepresentable {
-  
-  public init() {}
-  
-  public typealias UIViewControllerType = UINavigationController
+    var refreshToken: String
 
-  public func makeUIViewController(context: Context) -> UINavigationController {
-        // Here, we create and return our SDK's UI
-        let sdkVC = RNSDKCore.SDKHandler.SDKViewController()
+    public init(refreshToken: String) {
+        self.refreshToken = refreshToken
+    }
+  
+    public typealias UIViewControllerType = UINavigationController
+
+    public func makeUIViewController(context: Context) -> UINavigationController {
+        // Create the SDKViewController with the refreshToken
+        let sdkVC = RNSDKCore.SDKHandler.SDKViewController(refreshToken: refreshToken)
         let navigationController = UINavigationController(rootViewController: sdkVC)
         return navigationController
     }
 
-  public func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+    public func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
         // Update code if needed
     }
 }
