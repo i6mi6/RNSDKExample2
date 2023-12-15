@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, NativeModules, Text, View } from 'react-native'
+import { ActivityIndicator, NativeModules, View } from 'react-native'
 import CooklistSDK from 'react-native-cooklist'
 import InnerContainer from './InnerContainer'
 import { VIEW_TYPE } from './constants'
@@ -82,7 +82,7 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   render() {
-    const { viewType } = this.props
+    const { viewType, functionParams } = this.props
     const { loading } = this.state
     console.log('[REACT NATIVE] props:', this.props)
     if (loading) {
@@ -91,15 +91,13 @@ class CooklistSDKWrapper extends React.Component {
       }
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>{this.props.refreshToken}</Text>
           <ActivityIndicator />
         </View>
       )
     }
-
     return (
       <CooklistSDK.Provider>
-        {viewType === VIEW_TYPE.BACKGROUND_TASK ? null : <InnerContainer viewType={viewType} />}
+        <InnerContainer viewType={viewType} functionParams={functionParams} />
       </CooklistSDK.Provider>
     )
   }

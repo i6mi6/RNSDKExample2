@@ -74,7 +74,7 @@ public class RNSDKCore {
         }
       
         public func getConnectUpdateStoreView(storeId: String) -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore)
+            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId])
         }
 
         private func setupNotificationObserver() {
