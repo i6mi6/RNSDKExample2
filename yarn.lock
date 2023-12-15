@@ -10747,9 +10747,9 @@ react-native-background-fetch@^4.2.1:
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-4.2.1.tgz#81351355973f676295cfbb7a7946d7d4902273b6"
   integrity sha512-UePBlP2Az6PWrIDCoGDYl0IlimvV+TFl/5XUmL4KIo7xPK7TSZru1nYHH7uskW2an5AW39ko3mbV2w/+1LxsnQ==
 
-"react-native-cooklist@file:../react-native-cooklist/react-native-cooklist-0.1.21-local.0.tgz":
-  version "0.1.21-local.0"
-  resolved "file:../react-native-cooklist/react-native-cooklist-0.1.21-local.0.tgz#7827dac3da278bcb60392079f9d7059c8d33275d"
+"react-native-cooklist@file:../react-native-cooklist/react-native-cooklist-0.1.23-local.0.tgz":
+  version "0.1.23-local.0"
+  resolved "file:../react-native-cooklist/react-native-cooklist-0.1.23-local.0.tgz#16998d6ca2d3ed2157b7fef888e9c967bd51671f"
   dependencies:
     "@apollo/client" "3.3.20"
     "@react-native-cookies/cookies" "^6.2.1"

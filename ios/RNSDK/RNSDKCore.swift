@@ -10,11 +10,20 @@ public class RNSDKCore {
     // Configuration for the SDK
     public struct Configuration {
         let refreshToken: String
-        let onEvent: (([AnyHashable: Any]) -> Void)?
+        let onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
+        let onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
+        let onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         // Add a public initializer
-        public init(refreshToken: String, onEvent: (([AnyHashable: Any]) -> Void)? = nil) {
+        public init(
+            refreshToken: String,
+            onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
+            onInvoiceEvent: (([AnyHashable: Any]) -> Void)? = nil,
+            onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil
+        ) {
             self.refreshToken = refreshToken
-            self.onEvent = onEvent
+            self.onStoreConnectionEvent = onStoreConnectionEvent
+            self.onInvoiceEvent = onInvoiceEvent
+            self.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent
         }
     }
     
@@ -37,11 +46,15 @@ public class RNSDKCore {
         
         private var config: Configuration
         private var notificationName = Notification.Name("cooklist_sdk_event")
-        private var onEvent: (([AnyHashable: Any]) -> Void)?
+        private var onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
+        private var onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
+        private var onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         
         public init(config: Configuration) {
             self.config = config
-            self.onEvent = config.onEvent
+            self.onStoreConnectionEvent = config.onStoreConnectionEvent
+            self.onInvoiceEvent = config.onInvoiceEvent
+            self.onCheckingStoreConnectionEvent = config.onCheckingStoreConnectionEvent
             setupNotificationObserver()
         }
         
@@ -52,14 +65,32 @@ public class RNSDKCore {
         public class SDKViewController: RNSDKViewController {
         }
 
-        public func getRNSDKCoreView() -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken)
+        public func getBackgroundView() -> RNSDKCoreView {
+            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .backgroundTask)
         }
         
+        public func getStoreConnectionsListView() -> RNSDKCoreView {
+            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .storeConnectionsList)
+        }
+      
+        public func getConnectUpdateStoreView(storeId: String) -> RNSDKCoreView {
+            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore)
+        }
+
         private func setupNotificationObserver() {
             NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
-                if let params = notification.userInfo {
-                    self.onEvent?(params)
+                if let params = notification.userInfo as? [String: Any], 
+                let functionName = params["functionName"] as? String {
+                    switch functionName {
+                    case "onStoreConnectionEvent":
+                        self.onStoreConnectionEvent?(params)
+                    case "onInvoiceEvent":
+                        self.onInvoiceEvent?(params)
+                    case "onCheckingStoreConnectionEvent":
+                        self.onCheckingStoreConnectionEvent?(params)
+                    default:
+                        break // or handle unknown functionName
+                    }
                 }
             }
         }
@@ -116,7 +147,7 @@ public class RNSDKCore {
     }
     
     // Create a handler based on configuration
-    public static func create(_ config: Configuration) async -> Result<SDKHandler, SDKError> {
+    public static func create(_ config: Configuration) -> Result<SDKHandler, SDKError> {
         // // Simulating an API key check
         // guard config.refreshToken == "VALID_API_KEY" else {
         //     return .failure(.invalidRefreshToken)
@@ -126,32 +157,5 @@ public class RNSDKCore {
         let handler = SDKHandler(config: config)
 
         return .success(handler)
-
-        // // Prepare data to send (for example, config data)
-        // let dataToSend: [AnyHashable: Any] = ["refreshToken": config.refreshToken]
-        
-
-        // do {
-        //     // Attempt to send data and await response
-        //     let response = try await handler.sendDataToReactNativeAndWait(data: dataToSend)
-
-        //     // Log the response
-        //     print("Response: \(response)")
-
-        //     // Check the response and decide whether to return the handler
-        //     // if let responseData = response, responseData["isValid"] as? Bool == true {
-        //     //     return .success(handler)
-        //     // } else {
-        //     //     return .failure(.unknownError)
-        //     // }
-        //     return .success(handler)
-        // } catch let error as SDKError {
-        //     // Handle specific SDKError
-        //     return .failure(error)
-        // } catch {
-        //     // Handle other errors
-        //     return .failure(.unknownError)
-        // }
-
     }
 }
