@@ -148,10 +148,6 @@ public class RNSDKCore {
     
     // Create a handler based on configuration
     public static func create(_ config: Configuration) -> Result<SDKHandler, SDKError> {
-        // // Simulating an API key check
-        // guard config.refreshToken == "VALID_API_KEY" else {
-        //     return .failure(.invalidRefreshToken)
-        // }
 
         // Create an instance of SDKHandler
         let handler = SDKHandler(config: config)
