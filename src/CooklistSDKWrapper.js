@@ -31,10 +31,10 @@ class CooklistSDKWrapper extends React.Component {
 
   initialSetup = async () => {
     try {
-      const { viewType } = this.props
+      const { viewType, refreshToken } = this.props
       const [sdkResponse] = await Promise.all([
         CooklistSDK.configure({
-          refreshToken: this.props.refreshToken,
+          refreshToken,
           onStoreConnectionEvent: this.onStoreConnectionEvent,
           onInvoiceEvent: this.onInvoiceEvent,
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
