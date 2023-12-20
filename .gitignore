@@ -1,7 +1,7 @@
 # OSX
 #
 .DS_Store
-*/SDKOutput/Rescources/
+*/SDKOutput/Resources/
 */SDKOutput/Frameworks/
 
 # Xcode
