@@ -1,7 +1,7 @@
-DIR=/Users/alexandervitanov/Projects/General/RNSDKExample2
+DIR=/Users/alexandervitanov/Projects/General/StoreLinkProject
 
-PROJECT_NAME=RNSDKExample2
-FRAMEWORK_NAME=RNSDK
+PROJECT_NAME=StoreLinkProject
+FRAMEWORK_NAME=StoreLink
 OUT_BUILD_DIR=$DIR/ios/build
 OUT_FW_DIR=$DIR/ios/SDKOutput/Frameworks
 

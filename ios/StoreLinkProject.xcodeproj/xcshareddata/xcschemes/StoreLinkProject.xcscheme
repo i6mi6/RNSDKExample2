@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "RNSDKExample2.app"
-               BlueprintName = "RNSDKExample2"
-               ReferencedContainer = "container:RNSDKExample2.xcodeproj">
+               BuildableName = "StoreLinkProject.app"
+               BlueprintName = "StoreLinkProject"
+               ReferencedContainer = "container:StoreLinkProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "RNSDKExample2Tests.xctest"
-               BlueprintName = "RNSDKExample2Tests"
-               ReferencedContainer = "container:RNSDKExample2.xcodeproj">
+               BuildableName = "StoreLinkProjectTests.xctest"
+               BlueprintName = "StoreLinkProjectTests"
+               ReferencedContainer = "container:StoreLinkProject.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNSDKExample2.app"
-            BlueprintName = "RNSDKExample2"
-            ReferencedContainer = "container:RNSDKExample2.xcodeproj">
+            BuildableName = "StoreLinkProject.app"
+            BlueprintName = "StoreLinkProject"
+            ReferencedContainer = "container:StoreLinkProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNSDKExample2.app"
-            BlueprintName = "RNSDKExample2"
-            ReferencedContainer = "container:RNSDKExample2.xcodeproj">
+            BuildableName = "StoreLinkProject.app"
+            BlueprintName = "StoreLinkProject"
+            ReferencedContainer = "container:StoreLinkProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

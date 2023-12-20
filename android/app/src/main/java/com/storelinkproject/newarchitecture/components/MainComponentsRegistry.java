@@ -1,4 +1,4 @@
-package com.rnsdkexample2.newarchitecture.components;
+package com.storelinkproject.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

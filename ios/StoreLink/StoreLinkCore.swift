@@ -1,11 +1,11 @@
 //
-//  RNSDKCode.swift
-//  RNSDK
+//  StoreLinkCore.swift
+//  StoreLink
 //
 import Foundation
 import UIKit
 
-public class RNSDKCore {
+public class StoreLinkCore {
     
     // Configuration for the SDK
     public struct Configuration {
@@ -62,19 +62,19 @@ public class RNSDKCore {
             removeNotificationObserver()
         }
         
-        public class SDKViewController: RNSDKViewController {
+        public class SDKViewController: StoreLinkViewController {
         }
 
-        public func getBackgroundView() -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .backgroundTask)
+        public func getBackgroundView() -> StoreLinkCoreView {
+            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .backgroundTask)
         }
         
-        public func getStoreConnectionsListView() -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .storeConnectionsList)
+        public func getStoreConnectionsListView() -> StoreLinkCoreView {
+            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .storeConnectionsList)
         }
       
-        public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
+        public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StoreLinkCoreView {
+            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
         }
 
         private func setupNotificationObserver() {
@@ -126,7 +126,7 @@ public class RNSDKCore {
 
         // The method to open a UI based on the specified presentation method
         // public func open(presentUsing method: PresentationMethod) {
-        //     let sdkUI = RNSDKViewController()
+        //     let sdkUI = StoreLinkViewController()
             
         //     switch method {
         //     case .presentModally(let parentVC):

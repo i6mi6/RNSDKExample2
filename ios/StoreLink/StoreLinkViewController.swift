@@ -1,6 +1,6 @@
 //
-//  RNSDKViewController.swift
-//  RNSDK
+//  StoreLinkViewController.swift
+//  StoreLink
 //
 import Foundation
 import React
@@ -19,7 +19,7 @@ public enum ViewType {
     }
 }
 
-open class RNSDKViewController: UIViewController {
+open class StoreLinkViewController: UIViewController {
   
     private var viewUUID: String = UUID().uuidString
     private var notificationName = Notification.Name("cooklist_sdk_view_complete_event")
@@ -45,7 +45,7 @@ open class RNSDKViewController: UIViewController {
         let bundle: Bundle = Bundle.main
         var bundleURL = bundle.resourceURL
 
-        if let url = bundleURL?.appendingPathComponent("RNSDK.bundle/rnsdk.jsbundle") {
+        if let url = bundleURL?.appendingPathComponent("StoreLink.bundle/storelink.jsbundle") {
             var initialProperties: [String: Any] = [
                 "refreshToken": refreshToken,
                 "viewType": viewType.stringValue,
@@ -65,7 +65,7 @@ open class RNSDKViewController: UIViewController {
                 self.onComplete?(params)
             }
 
-            let view = RCTRootView(bundleURL: url, moduleName: "RNSDKExample2", initialProperties: initialProperties)
+            let view = RCTRootView(bundleURL: url, moduleName: "StoreLinkProject", initialProperties: initialProperties)
             self.view = view
         }
     }

@@ -1,7 +1,7 @@
 CLI_PATH=./node_modules/react-native/local-cli/cli.js
 
 INTEGRATION_MODULE_FOLDER=ios/SDKOutput/Rescources
-BUNDLE_NAME=rnsdk.jsbundle
+BUNDLE_NAME=storelink.jsbundle
 
 if [ -d "${INTEGRATION_MODULE_FOLDER}" ]; then
   rm -rf $INTEGRATION_MODULE_FOLDER

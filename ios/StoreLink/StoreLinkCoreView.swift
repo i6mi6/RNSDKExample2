@@ -1,10 +1,10 @@
 //
-//  RNSDKCoreView.swift
-//  RNSDK
+//  StoreLinkCoreView.swift
+//  StoreLink
 //
 import SwiftUI
 
-public struct RNSDKCoreView: UIViewControllerRepresentable {
+public struct StoreLinkCoreView: UIViewControllerRepresentable {
     var refreshToken: String
     var viewType: ViewType
     var functionParams: [AnyHashable: Any]?
@@ -26,7 +26,7 @@ public struct RNSDKCoreView: UIViewControllerRepresentable {
 
     public func makeUIViewController(context: Context) -> UINavigationController {
         // Create the SDKViewController with the refreshToken and viewType
-      let sdkVC = RNSDKCore.SDKHandler.SDKViewController(
+      let sdkVC = StoreLinkCore.SDKHandler.SDKViewController(
         refreshToken: refreshToken,
         viewType: viewType,
         functionParams: functionParams,
