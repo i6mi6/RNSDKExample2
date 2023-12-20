@@ -2,6 +2,7 @@ import React from 'react'
 import { ActivityIndicator, NativeModules, View } from 'react-native'
 import CooklistSDK from 'react-native-cooklist'
 import InnerContainer from './InnerContainer'
+import { logError, logEventDebug, logEventDev } from './utils/util'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
 const { StoreLinkModule } = NativeModules
 
@@ -31,7 +32,7 @@ class CooklistSDKWrapper extends React.Component {
 
   initialSetup = async () => {
     try {
-      const { viewType, refreshToken } = this.props
+      const { viewType, logLevel, refreshToken } = this.props
       const [sdkResponse] = await Promise.all([
         CooklistSDK.configure({
           refreshToken,
@@ -39,16 +40,17 @@ class CooklistSDKWrapper extends React.Component {
           onInvoiceEvent: this.onInvoiceEvent,
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
           _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
+          _logLevel: logLevel,
         }),
       ])
       if (sdkResponse.success) {
         this.setState({ loading: false })
-        console.log('SDK initialized!')
+        logEventDebug(this.props.logLevel, 'SDK initialized!')
       } else {
-        console.log(`Error initializing CooklistSDK: ${sdkResponse.message}`)
+        logEventDebug(this.props.logLevel, `Error initializing CooklistSDK: ${sdkResponse.message}`)
       }
     } catch (error) {
-      console.log(error)
+      logError(error)
     }
   }
 
@@ -58,7 +60,7 @@ class CooklistSDKWrapper extends React.Component {
       storeConnectionId,
       credentialsStatus,
     })
-    console.log(`[REACT NATIVE] onStoreConnectionEvent:`, { storeConnectionId, credentialsStatus })
+    logEventDev(this.props.logLevel, `[REACT NATIVE] onStoreConnectionEvent:`, { storeConnectionId, credentialsStatus })
   }
 
   onInvoiceEvent = ({ storeConnectionId, orderIds }) => {
@@ -67,7 +69,7 @@ class CooklistSDKWrapper extends React.Component {
       storeConnectionId,
       orderIds,
     })
-    console.log(`[REACT NATIVE] onInvoiceEvent:`, {
+    logEventDev(this.props.logLevel, `[REACT NATIVE] onInvoiceEvent:`, {
       storeConnectionId,
       orderIds,
     })
@@ -78,7 +80,7 @@ class CooklistSDKWrapper extends React.Component {
       functionName: 'onCheckingStoreConnectionEvent',
       ...(payload || {}),
     })
-    console.log(`[REACT NATIVE] onCheckingStoreConnectionEvent:`, payload)
+    logEventDev(this.props.logLevel, `[REACT NATIVE] onCheckingStoreConnectionEvent:`, payload)
   }
 
   onViewComplete = (payload) => {
@@ -90,13 +92,13 @@ class CooklistSDKWrapper extends React.Component {
       viewUUID,
       ...(payload || {}),
     })
-    console.log(`[REACT NATIVE] onViewComplete:`, payload)
+    logEventDev(this.props.logLevel, `[REACT NATIVE] onViewComplete:`, payload)
   }
 
   render() {
     const { viewType, functionParams } = this.props
     const { loading } = this.state
-    console.log('[REACT NATIVE] props:', this.props)
+    logEventDebug(this.props.logLevel, '[REACT NATIVE] props:', this.props)
     if (loading) {
       if (viewType === VIEW_TYPE.BACKGROUND_TASK) {
         return null

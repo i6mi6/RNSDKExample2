@@ -9,6 +9,7 @@ import {
 import { compose } from 'recompose'
 import { VIEW_TYPE } from './constants'
 import { withCooklistSDKConsumer } from './utils/hoc'
+import { logLevelDev } from './utils/util'
 
 // Walmart
 const STORE_ID = "U3RvcmVOb2RlOjM="
@@ -41,7 +42,7 @@ class ConnectStoreContainerView extends React.Component {
       }
       this.setState({ flowDisplayed: true })
     } catch (error) {
-      console.log(error)
+      logLevelDev(this.props.logLevel, error)
     }
   }
 

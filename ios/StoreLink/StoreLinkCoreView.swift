@@ -6,18 +6,21 @@ import SwiftUI
 
 public struct StoreLinkCoreView: UIViewControllerRepresentable {
     var refreshToken: String
+    var logLevel: LogLevel?
     var viewType: ViewType
     var functionParams: [AnyHashable: Any]?
     var onComplete: (([AnyHashable: Any]) -> Void)?
 
     public init(
       refreshToken: String,
+      logLevel: LogLevel? = nil,
       viewType: ViewType = .backgroundTask,
       functionParams: [AnyHashable: Any]? = nil,
       onComplete: (([AnyHashable: Any]) -> Void)? = nil
     ) {
         self.refreshToken = refreshToken
         self.viewType = viewType
+        self.logLevel = logLevel
         self.functionParams = functionParams
         self.onComplete = onComplete
     }
@@ -29,6 +32,7 @@ public struct StoreLinkCoreView: UIViewControllerRepresentable {
       let sdkVC = StoreLinkCore.SDKHandler.SDKViewController(
         refreshToken: refreshToken,
         viewType: viewType,
+        logLevel: logLevel,
         functionParams: functionParams,
         onComplete: onComplete
       )

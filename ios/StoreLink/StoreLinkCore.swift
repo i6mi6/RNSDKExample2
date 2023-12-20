@@ -10,17 +10,20 @@ public class StoreLinkCore {
     // Configuration for the SDK
     public struct Configuration {
         let refreshToken: String
+        let logLevel: LogLevel?
         let onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         let onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
         let onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         // Add a public initializer
         public init(
             refreshToken: String,
+            logLevel: LogLevel? = nil,
             onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onInvoiceEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil
         ) {
             self.refreshToken = refreshToken
+            self.logLevel = logLevel
             self.onStoreConnectionEvent = onStoreConnectionEvent
             self.onInvoiceEvent = onInvoiceEvent
             self.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent
@@ -66,15 +69,15 @@ public class StoreLinkCore {
         }
 
         public func getBackgroundView() -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .backgroundTask)
+            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask)
         }
         
         public func getStoreConnectionsListView() -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .storeConnectionsList)
+            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
         }
       
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
+            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
         }
 
         private func setupNotificationObserver() {

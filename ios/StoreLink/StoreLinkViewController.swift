@@ -19,6 +19,20 @@ public enum ViewType {
     }
 }
 
+public enum LogLevel {
+    case none
+    case debug
+    case dev
+
+    var intValue: Int {
+        switch self {
+            case .none: return 1
+            case .debug: return 2
+            case .dev: return 3
+        }
+    }
+}
+
 open class StoreLinkViewController: UIViewController {
   
     private var viewUUID: String = UUID().uuidString
@@ -26,12 +40,14 @@ open class StoreLinkViewController: UIViewController {
 
     var refreshToken: String
     var viewType: ViewType
+    var logLevel: LogLevel?
     var functionParams: [AnyHashable: Any]?
     var onComplete: (([AnyHashable: Any]) -> Void)?
 
-    init(refreshToken: String, viewType: ViewType, functionParams: [AnyHashable: Any]?, onComplete: (([AnyHashable: Any]) -> Void)?) {
+    init(refreshToken: String, viewType: ViewType, logLevel: LogLevel?, functionParams: [AnyHashable: Any]?, onComplete: (([AnyHashable: Any]) -> Void)?) {
         self.refreshToken = refreshToken
         self.viewType = viewType
+        self.logLevel = logLevel
         self.functionParams = functionParams
         self.onComplete = onComplete
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +64,7 @@ open class StoreLinkViewController: UIViewController {
         if let url = bundleURL?.appendingPathComponent("StoreLink.bundle/storelink.jsbundle") {
             var initialProperties: [String: Any] = [
                 "refreshToken": refreshToken,
+                "logLevel": logLevel?.intValue,
                 "viewType": viewType.stringValue,
                 "viewUUID": viewUUID
             ]
