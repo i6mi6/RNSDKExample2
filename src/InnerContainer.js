@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import {
   StyleSheet,
@@ -5,11 +6,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import CooklistSDK from 'react-native-cooklist'
+import { compose } from 'recompose'
 import { VIEW_TYPE } from './constants'
 import { withCooklistSDKConsumer } from './utils/hoc'
-import { compose } from 'recompose'
-import _ from 'lodash'
 
 // Walmart
 const STORE_ID = "U3RvcmVOb2RlOjM="
@@ -20,20 +19,53 @@ class InnerContainer extends React.Component {
   render() {
     const { viewType } = this.props
     if (viewType === VIEW_TYPE.CONNECT_UPDATE_STORE) {
-      return <ConnectStoreContainer {...this.props} />
+      return <ConnectStoreContainerView {...this.props} />
     }
     if (viewType === VIEW_TYPE.STORE_CONNECTIONS_LIST) {
-      return <StoreConnectionsListContainer {...this.props} />
+      return <StoreConnectionsListContainerView {...this.props} />
     }
     return null
   }
 }
 
-class ConnectStoreContainerPure extends React.Component {
+class ConnectStoreContainerView extends React.Component {
+
+  state = {
+    flowDisplayed: false,
+  }
+
+  onViewComplete = () => {
+    try {
+      if (this.props.onViewComplete) {
+        this.props.onViewComplete()
+      }
+      this.setState({ flowDisplayed: true })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  render() {
+    const { flowDisplayed } = this.state
+    if (flowDisplayed) {
+      return null
+    }
+    return (
+      <ConnectStoreInnerContainer
+        {...this.props}
+        onComplete={this.onViewComplete}/>
+    )
+  }
+}
+
+class ConnectStoreInnerContainerPure extends React.Component {
 
   componentDidMount() {
     if (_.get(this.props, 'functionParams.storeId')) {
-      this.props.connectOrUpdateStoreConnection({ storeId: this.props.functionParams.storeId })
+      this.props.connectOrUpdateStoreConnection({
+        storeId: this.props.functionParams.storeId,
+        onComplete: this.props.onComplete,
+      })
     }
   }
 
@@ -42,27 +74,19 @@ class ConnectStoreContainerPure extends React.Component {
   }
 }
 
-const ConnectStoreContainer = compose(
+const ConnectStoreInnerContainer = compose(
   withCooklistSDKConsumer,
-)(ConnectStoreContainerPure)
+)(ConnectStoreInnerContainerPure)
 
-class StoreConnectionsListContainer extends React.Component {
+class StoreConnectionsListContainerViewPure extends React.Component {
 
   renderContent = () => {
     return (
-      <CooklistSDK.Consumer>
-        {({
-          connectOrUpdateStoreConnection,
-        }) => (
-          <>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => connectOrUpdateStoreConnection({ storeId: STORE_ID })}>
-              <Text>{`Connect`} {STORE_NAME}</Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </CooklistSDK.Consumer>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => this.props.connectOrUpdateStoreConnection({ storeId: STORE_ID })}>
+        <Text>{`Connect`} {STORE_NAME}</Text>
+      </TouchableOpacity>
     )
   }
 
@@ -77,6 +101,10 @@ class StoreConnectionsListContainer extends React.Component {
     )
   }
 }
+
+const StoreConnectionsListContainerView = compose(
+  withCooklistSDKConsumer,
+)(StoreConnectionsListContainerViewPure)
 
 export default InnerContainer
 

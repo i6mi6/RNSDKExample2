@@ -73,8 +73,8 @@ public class RNSDKCore {
             return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .storeConnectionsList)
         }
       
-        public func getConnectUpdateStoreView(storeId: String) -> RNSDKCoreView {
-            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId])
+        public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> RNSDKCoreView {
+            return RNSDKCoreView(refreshToken: config.refreshToken, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
         }
 
         private func setupNotificationObserver() {
