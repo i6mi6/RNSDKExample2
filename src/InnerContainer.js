@@ -1,15 +1,18 @@
 import _ from 'lodash'
 import React from 'react'
 import {
+  NativeEventEmitter,
+  NativeModules,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { compose } from 'recompose'
-import { VIEW_TYPE } from './constants'
+import { EVENT_TYPES, VIEW_TYPE } from './constants'
 import { withCooklistSDKConsumer } from './utils/hoc'
-import { logLevelDev } from './utils/util'
+import { logEventDev, logEventDebug, logError } from './utils/util'
+const { StoreLinkModule } = NativeModules
 
 // Walmart
 const STORE_ID = "U3RvcmVOb2RlOjM="
@@ -25,6 +28,9 @@ class InnerContainer extends React.Component {
     if (viewType === VIEW_TYPE.STORE_CONNECTIONS_LIST) {
       return <StoreConnectionsListContainerView {...this.props} />
     }
+    if (viewType === VIEW_TYPE.BACKGROUND_TASK) {
+      return <BackgroundContainerView {...this.props} />
+    }
     return null
   }
 }
@@ -35,14 +41,14 @@ class ConnectStoreContainerView extends React.Component {
     flowDisplayed: false,
   }
 
-  onViewComplete = () => {
+  onViewComplete = (payload) => {
     try {
       if (this.props.onViewComplete) {
-        this.props.onViewComplete()
+        this.props.onViewComplete(payload)
       }
       this.setState({ flowDisplayed: true })
     } catch (error) {
-      logLevelDev(this.props.logLevel, error)
+      logEventDev(this.props.logLevel, error)
     }
   }
 
@@ -106,6 +112,46 @@ class StoreConnectionsListContainerViewPure extends React.Component {
 const StoreConnectionsListContainerView = compose(
   withCooklistSDKConsumer,
 )(StoreConnectionsListContainerViewPure)
+
+class BackgroundContainerViewPure extends React.Component {
+
+  eventEmitter = null
+
+  componentDidMount() {
+    this.startListeningForEvents()
+  }
+
+  componentWillUnmount() {
+    this.eventEmitter.removeAllListeners('CooklistDataFromNative')
+  }
+
+  startListeningForEvents = () => {
+    try {
+      this.eventEmitter = new NativeEventEmitter(StoreLinkModule)
+      logEventDebug(this.props.logLevel, '[REACT NATIVE] Listening for CooklistDataFromNative')
+      this.eventEmitter.addListener('CooklistDataFromNative', data => {
+        logEventDebug(this.props.logLevel, '[REACT NATIVE]', { CooklistDataFromNative: data })
+        if (
+          _.get(data, '_cooklistInternal')
+          && _.get(data, 'eventType') === EVENT_TYPES.COOKLIST_SDK_EVENT_EAGER_CHECK_BG_PURCHASES
+          && _.get(data, 'storeId')
+        ) {
+          this.props.checkStoreConnectionForInvoicesFullCrawl({ storeId: _.get(data, 'storeId') })
+        }
+      })
+    } catch (error) {
+      logError(error)
+    }
+  }
+
+  render() {
+    return null
+  }
+}
+
+const BackgroundContainerView = compose(
+  withCooklistSDKConsumer,
+)(BackgroundContainerViewPure)
 
 export default InnerContainer
 

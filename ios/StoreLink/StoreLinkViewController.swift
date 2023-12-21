@@ -36,7 +36,7 @@ public enum LogLevel {
 open class StoreLinkViewController: UIViewController {
   
     private var viewUUID: String = UUID().uuidString
-    private var notificationName = Notification.Name("cooklist_sdk_view_complete_event")
+    private var viewCompleteNotificationName = Notification.Name("cooklist_sdk_view_complete_event")
 
     var refreshToken: String
     var viewType: ViewType
@@ -57,6 +57,28 @@ open class StoreLinkViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        removeNotificationObservers()
+        onViewUnmount()
+    }
+
+    private func removeNotificationObservers() {
+        NotificationCenter.default.removeObserver(self, name: self.viewCompleteNotificationName, object: nil)
+    }
+  
+    private func onViewUnmount(){
+      guard viewType == .connectUpdateStore,
+            let storeId = functionParams?["storeId"] as? String else {
+        return
+      }
+      let data: [String: Any] = [
+          "_cooklistInternal": true,
+          "eventType": "cooklist_sdk_event_eager_check_bg_purchases",
+          "storeId": storeId,
+      ]
+      NotificationCenter.default.post(name: Notification.Name("CooklistDataFromNative"), object: nil, userInfo: data)
+    }
+
     override public func loadView() {
         let bundle: Bundle = Bundle.main
         var bundleURL = bundle.resourceURL
@@ -72,7 +94,7 @@ open class StoreLinkViewController: UIViewController {
                 initialProperties["functionParams"] = functionParams
             }
 
-            NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { [weak self] notification in
+            NotificationCenter.default.addObserver(forName: self.viewCompleteNotificationName, object: nil, queue: .main) { [weak self] notification in
                 guard let self = self,
                       let params = notification.userInfo as? [String: Any],
                       let notificationUUID = params["viewUUID"] as? String,

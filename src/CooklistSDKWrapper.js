@@ -2,33 +2,19 @@ import React from 'react'
 import { ActivityIndicator, NativeModules, View } from 'react-native'
 import CooklistSDK from 'react-native-cooklist'
 import InnerContainer from './InnerContainer'
-import { logError, logEventDebug, logEventDev } from './utils/util'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
+import { logError, logEventDebug, logEventDev } from './utils/util'
 const { StoreLinkModule } = NativeModules
 
 class CooklistSDKWrapper extends React.Component {
 
-  // eventEmitter = null
   state = {
     loading: true,
   }
 
   UNSAFE_componentWillMount() {
-    // this.startListeningForEvents()
     this.initialSetup()
   }
-
-  // componentWillUnmount() {
-  //   this.eventEmitter.removeAllListeners('DataFromNative')
-  // }
-
-  // startListeningForEvents = () => {
-  //   this.eventEmitter = new NativeEventEmitter(StoreLinkModule)
-  //   console.log('[REACT NATIVE] Listening for DataFromNative')
-  //   this.eventEmitter.addListener('DataFromNative', data => {
-  //     console.log('[REACT NATIVE]', { dataFromNative: data })
-  //   })
-  // }
 
   initialSetup = async () => {
     try {
@@ -84,15 +70,19 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onViewComplete = (payload) => {
-    const { viewUUID } = this.props
-    if (!viewUUID) {
-      return
+    try {
+      const { viewUUID } = this.props
+      if (!viewUUID) {
+        return
+      }
+      StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
+        viewUUID,
+        ...(payload || {}),
+      })
+      logEventDev(this.props.logLevel, `[REACT NATIVE] onViewComplete:`, payload)
+    } catch (error) {
+      logError(this.props.logLevel, error)
     }
-    StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
-      viewUUID,
-      ...(payload || {}),
-    })
-    logEventDev(this.props.logLevel, `[REACT NATIVE] onViewComplete:`, payload)
   }
 
   render() {

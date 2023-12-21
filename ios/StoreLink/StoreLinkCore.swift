@@ -58,11 +58,11 @@ public class StoreLinkCore {
             self.onStoreConnectionEvent = config.onStoreConnectionEvent
             self.onInvoiceEvent = config.onInvoiceEvent
             self.onCheckingStoreConnectionEvent = config.onCheckingStoreConnectionEvent
-            setupNotificationObserver()
+            setupNotificationObservers()
         }
         
         deinit {
-            removeNotificationObserver()
+          removeNotificationObservers()
         }
         
         public class SDKViewController: StoreLinkViewController {
@@ -80,9 +80,9 @@ public class StoreLinkCore {
             return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
         }
 
-        private func setupNotificationObserver() {
+        private func setupNotificationObservers() {
             NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
-                if let params = notification.userInfo as? [String: Any], 
+                if let params = notification.userInfo as? [String: Any],
                 let functionName = params["functionName"] as? String {
                     switch functionName {
                     case "onStoreConnectionEvent":
@@ -98,34 +98,34 @@ public class StoreLinkCore {
             }
         }
         
-        private func removeNotificationObserver() {
+        private func removeNotificationObservers() {
             NotificationCenter.default.removeObserver(self, name: self.notificationName, object: nil)
         }
 
         public func sendDataToReactNative(data: [AnyHashable: Any]) {
-            NotificationCenter.default.post(name: Notification.Name("DataFromNative"), object: nil, userInfo: data)
+            NotificationCenter.default.post(name: Notification.Name("CooklistDataFromNative"), object: nil, userInfo: data)
         }
-      
-        public func sendDataToReactNativeAndWait(data: [AnyHashable: Any]) async throws -> [AnyHashable: Any]? {
 
-            sendDataToReactNative(data: data)
+        // public func sendDataToReactNativeAndWait(data: [AnyHashable: Any]) async throws -> [AnyHashable: Any]? {
 
-            // Use Task for timeout handling; 10s limit
-            return try await withCheckedThrowingContinuation { continuation in
-                let timeoutTask = Task {
-                    try await Task.sleep(nanoseconds: UInt64(10_000_000_000))
-                    continuation.resume(throwing: SDKError.nativeCommunicationError)
-                }
+        //     sendDataToReactNative(data: data)
 
-                NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
-                    timeoutTask.cancel()  // Cancel the timeout task if we receive a response
+        //     // Use Task for timeout handling; 10s limit
+        //     return try await withCheckedThrowingContinuation { continuation in
+        //         let timeoutTask = Task {
+        //             try await Task.sleep(nanoseconds: UInt64(10_000_000_000))
+        //             continuation.resume(throwing: SDKError.nativeCommunicationError)
+        //         }
 
-                    if let params = notification.userInfo {
-                        continuation.resume(returning: params)
-                    }
-                }
-            }
-        }
+        //         NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
+        //             timeoutTask.cancel()  // Cancel the timeout task if we receive a response
+
+        //             if let params = notification.userInfo {
+        //                 continuation.resume(returning: params)
+        //             }
+        //         }
+        //     }
+        // }
 
         // The method to open a UI based on the specified presentation method
         // public func open(presentUsing method: PresentationMethod) {

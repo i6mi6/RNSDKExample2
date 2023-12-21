@@ -9,17 +9,17 @@ class StoreLinkModule: RCTEventEmitter {
     private var observer: NSObjectProtocol?
   
     @objc override func supportedEvents() -> [String] {
-        return ["DataFromNative"]
+        return ["CooklistDataFromNative"]
     }
 
     override init() {
         super.init()
         
-        let notificationNameToObserve = Notification.Name("DataFromNative")
+        let notificationNameToObserve = Notification.Name("CooklistDataFromNative")
       
         observer = NotificationCenter.default.addObserver(forName: notificationNameToObserve, object: nil, queue: .main) { notification in
               if let params = notification.userInfo {
-                self.sendEvent(withName: "DataFromNative", body: params)
+                self.sendEvent(withName: "CooklistDataFromNative", body: params)
               }
           }
         
