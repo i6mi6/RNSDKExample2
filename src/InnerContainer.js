@@ -25,9 +25,9 @@ class InnerContainer extends React.Component {
     if (viewType === VIEW_TYPE.CONNECT_UPDATE_STORE) {
       return <ConnectStoreContainerView {...this.props} />
     }
-    if (viewType === VIEW_TYPE.STORE_CONNECTIONS_LIST) {
-      return <StoreConnectionsListContainerView {...this.props} />
-    }
+    // if (viewType === VIEW_TYPE.STORE_CONNECTIONS_LIST) {
+    //   return <StoreConnectionsListContainerView {...this.props} />
+    // }
     if (viewType === VIEW_TYPE.BACKGROUND_TASK) {
       return <BackgroundContainerView {...this.props} />
     }

@@ -71,10 +71,10 @@ public class StoreLinkCore {
         public func getBackgroundView() -> StoreLinkCoreView {
             return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask)
         }
-        
-        public func getStoreConnectionsListView() -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
-        }
+//        
+//        public func getStoreConnectionsListView() -> StoreLinkCoreView {
+//            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
+//        }
       
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StoreLinkCoreView {
             return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
@@ -150,11 +150,16 @@ public class StoreLinkCore {
     }
     
     // Create a handler based on configuration
-    public static func create(_ config: Configuration) -> Result<SDKHandler, SDKError> {
-
-        // Create an instance of SDKHandler
-        let handler = SDKHandler(config: config)
-
-        return .success(handler)
+    public static func create(_ config: Configuration) async -> Result<SDKHandler, SDKError> {
+        do {
+          let handler = SDKHandler(config: config)
+          return .success(handler)
+        } catch let error as SDKError {
+            // Handle specific SDKError
+            return .failure(error)
+        } catch {
+            // Handle other errors
+            return .failure(.unknownError)
+        }
     }
 }
