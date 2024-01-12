@@ -10,19 +10,22 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
     var viewType: ViewType
     var functionParams: [AnyHashable: Any]?
     var onComplete: (([AnyHashable: Any]) -> Void)?
+    var brandName: String?
 
     public init(
       refreshToken: String,
       logLevel: LogLevel? = nil,
       viewType: ViewType = .backgroundTask,
       functionParams: [AnyHashable: Any]? = nil,
-      onComplete: (([AnyHashable: Any]) -> Void)? = nil
+      onComplete: (([AnyHashable: Any]) -> Void)? = nil,
+      brandName: String? = nil
     ) {
         self.refreshToken = refreshToken
         self.viewType = viewType
         self.logLevel = logLevel
         self.functionParams = functionParams
         self.onComplete = onComplete
+        self.brandName = brandName
     }
   
     public typealias UIViewControllerType = UINavigationController
@@ -34,7 +37,8 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
         viewType: viewType,
         logLevel: logLevel,
         functionParams: functionParams,
-        onComplete: onComplete
+        onComplete: onComplete,
+        brandName: brandName
       )
         let navigationController = UINavigationController(rootViewController: sdkVC)
         return navigationController

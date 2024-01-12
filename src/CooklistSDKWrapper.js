@@ -18,7 +18,7 @@ class CooklistSDKWrapper extends React.Component {
 
   initialSetup = async () => {
     try {
-      const { viewType, logLevel, refreshToken } = this.props
+      const { viewType, logLevel, refreshToken, brandName } = this.props
       const [sdkResponse] = await Promise.all([
         Storelink.configure({
           refreshToken,
@@ -27,6 +27,7 @@ class CooklistSDKWrapper extends React.Component {
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
           _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
           _logLevel: logLevel,
+          brandName,
         }),
       ])
       if (sdkResponse.success) {

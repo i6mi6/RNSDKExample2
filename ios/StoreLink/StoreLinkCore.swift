@@ -14,19 +14,22 @@ public class StorelinkCore {
         let onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         let onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
         let onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
+        let brandName: String?
         // Add a public initializer
         public init(
             refreshToken: String,
             logLevel: LogLevel? = nil,
             onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onInvoiceEvent: (([AnyHashable: Any]) -> Void)? = nil,
-            onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil
+            onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
+            brandName: String? = nil
         ) {
             self.refreshToken = refreshToken
             self.logLevel = logLevel
             self.onStoreConnectionEvent = onStoreConnectionEvent
             self.onInvoiceEvent = onInvoiceEvent
             self.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent
+            self.brandName = brandName
         }
     }
     
@@ -77,7 +80,7 @@ public class StorelinkCore {
 //        }
       
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
-            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete, brandName: config.brandName)
         }
 
         private func setupNotificationObservers() {
