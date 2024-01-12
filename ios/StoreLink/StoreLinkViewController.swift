@@ -1,6 +1,6 @@
 //
-//  StoreLinkViewController.swift
-//  StoreLink
+//  StorelinkViewController.swift
+//  Storelink
 //
 import Foundation
 import React
@@ -33,7 +33,7 @@ public enum LogLevel {
     }
 }
 
-open class StoreLinkViewController: UIViewController {
+open class StorelinkViewController: UIViewController {
   
     private var viewUUID: String = UUID().uuidString
     private var viewCompleteNotificationName = Notification.Name("cooklist_sdk_view_complete_event")
@@ -83,7 +83,7 @@ open class StoreLinkViewController: UIViewController {
         let bundle: Bundle = Bundle.main
         var bundleURL = bundle.resourceURL
 
-        if let url = bundleURL?.appendingPathComponent("StoreLink.bundle/storelink.jsbundle") {
+        if let url = bundleURL?.appendingPathComponent("Storelink.bundle/storelink.jsbundle") {
             var initialProperties: [String: Any] = [
                 "refreshToken": refreshToken,
                 "logLevel": logLevel?.intValue,
@@ -104,7 +104,7 @@ open class StoreLinkViewController: UIViewController {
                 self.onComplete?(params)
             }
 
-            let view = RCTRootView(bundleURL: url, moduleName: "StoreLinkProject", initialProperties: initialProperties)
+            let view = RCTRootView(bundleURL: url, moduleName: "StorelinkProject", initialProperties: initialProperties)
             self.view = view
         }
     }

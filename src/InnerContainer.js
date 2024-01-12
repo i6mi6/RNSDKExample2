@@ -10,9 +10,9 @@ import {
 } from 'react-native'
 import { compose } from 'recompose'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
-import { withCooklistSDKConsumer } from './utils/hoc'
+import { withStorelinkConsumer } from './utils/hoc'
 import { logEventDev, logEventDebug, logError } from './utils/util'
-const { StoreLinkModule } = NativeModules
+const { StorelinkModule } = NativeModules
 
 // Walmart
 const STORE_ID = "U3RvcmVOb2RlOjM="
@@ -82,7 +82,7 @@ class ConnectStoreInnerContainerPure extends React.Component {
 }
 
 const ConnectStoreInnerContainer = compose(
-  withCooklistSDKConsumer,
+  withStorelinkConsumer,
 )(ConnectStoreInnerContainerPure)
 
 class StoreConnectionsListContainerViewPure extends React.Component {
@@ -110,7 +110,7 @@ class StoreConnectionsListContainerViewPure extends React.Component {
 }
 
 const StoreConnectionsListContainerView = compose(
-  withCooklistSDKConsumer,
+  withStorelinkConsumer,
 )(StoreConnectionsListContainerViewPure)
 
 class BackgroundContainerViewPure extends React.Component {
@@ -127,7 +127,7 @@ class BackgroundContainerViewPure extends React.Component {
 
   startListeningForEvents = () => {
     try {
-      this.eventEmitter = new NativeEventEmitter(StoreLinkModule)
+      this.eventEmitter = new NativeEventEmitter(StorelinkModule)
       logEventDebug(this.props.logLevel, '[REACT NATIVE] Listening for CooklistDataFromNative')
       this.eventEmitter.addListener('CooklistDataFromNative', data => {
         logEventDebug(this.props.logLevel, '[REACT NATIVE]', { CooklistDataFromNative: data })
@@ -150,7 +150,7 @@ class BackgroundContainerViewPure extends React.Component {
 }
 
 const BackgroundContainerView = compose(
-  withCooklistSDKConsumer,
+  withStorelinkConsumer,
 )(BackgroundContainerViewPure)
 
 export default InnerContainer

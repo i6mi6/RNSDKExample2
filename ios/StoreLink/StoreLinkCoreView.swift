@@ -1,10 +1,10 @@
 //
-//  StoreLinkCoreView.swift
-//  StoreLink
+//  StorelinkCoreView.swift
+//  Storelink
 //
 import SwiftUI
 
-public struct StoreLinkCoreView: UIViewControllerRepresentable {
+public struct StorelinkCoreView: UIViewControllerRepresentable {
     var refreshToken: String
     var logLevel: LogLevel?
     var viewType: ViewType
@@ -29,7 +29,7 @@ public struct StoreLinkCoreView: UIViewControllerRepresentable {
 
     public func makeUIViewController(context: Context) -> UINavigationController {
         // Create the SDKViewController with the refreshToken and viewType
-      let sdkVC = StoreLinkCore.SDKHandler.SDKViewController(
+      let sdkVC = StorelinkCore.SDKHandler.SDKViewController(
         refreshToken: refreshToken,
         viewType: viewType,
         logLevel: logLevel,

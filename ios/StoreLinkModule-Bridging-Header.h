@@ -1,2 +1,2 @@
-// StoreLinkModule.h-Bridging-Header.h
+// StorelinkModule.h-Bridging-Header.h
 #import <React/RCTBridgeModule.h>

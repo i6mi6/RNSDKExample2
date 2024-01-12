@@ -3,8 +3,8 @@ import React
 import UIKit
 import AVFoundation
 
-@objc(StoreLinkModule)
-class StoreLinkModule: RCTEventEmitter {
+@objc(StorelinkModule)
+class StorelinkModule: RCTEventEmitter {
 
     private var observer: NSObjectProtocol?
   

@@ -1,10 +1,10 @@
 import React from 'react'
 import { ActivityIndicator, NativeModules, View } from 'react-native'
-import CooklistSDK from 'react-native-cooklist'
+import Storelink from 'react-native-storelink'
 import InnerContainer from './InnerContainer'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
 import { logError, logEventDebug, logEventDev } from './utils/util'
-const { StoreLinkModule } = NativeModules
+const { StorelinkModule } = NativeModules
 
 class CooklistSDKWrapper extends React.Component {
 
@@ -20,7 +20,7 @@ class CooklistSDKWrapper extends React.Component {
     try {
       const { viewType, logLevel, refreshToken } = this.props
       const [sdkResponse] = await Promise.all([
-        CooklistSDK.configure({
+        Storelink.configure({
           refreshToken,
           onStoreConnectionEvent: this.onStoreConnectionEvent,
           onInvoiceEvent: this.onInvoiceEvent,
@@ -41,7 +41,7 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onStoreConnectionEvent = ({ storeConnectionId, credentialsStatus }) => {
-    StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
       functionName: 'onStoreConnectionEvent',
       storeConnectionId,
       credentialsStatus,
@@ -50,7 +50,7 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onInvoiceEvent = ({ storeConnectionId, orderIds }) => {
-    StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
       functionName: 'onInvoiceEvent',
       storeConnectionId,
       orderIds,
@@ -62,7 +62,7 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onCheckingStoreConnectionEvent = (payload) => {
-    StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
       functionName: 'onCheckingStoreConnectionEvent',
       ...(payload || {}),
     })
@@ -75,7 +75,7 @@ class CooklistSDKWrapper extends React.Component {
       if (!viewUUID) {
         return
       }
-      StoreLinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
+      StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
         viewUUID,
         ...(payload || {}),
       })
@@ -100,13 +100,13 @@ class CooklistSDKWrapper extends React.Component {
       )
     }
     return (
-      <CooklistSDK.Provider>
+      <Storelink.Provider>
         <InnerContainer
           viewType={viewType}
           functionParams={functionParams}
           onViewComplete={this.onViewComplete}
         />
-      </CooklistSDK.Provider>
+      </Storelink.Provider>
     )
   }
 }

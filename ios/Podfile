@@ -14,7 +14,7 @@ def react_native_modules()
     :hermes_enabled => false
   )
 
-  # Pods for StoreLinkProject
+  # Pods for StorelinkProject
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/React/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -66,7 +66,7 @@ def react_native_modules()
 
 end
 
-target 'StoreLinkProject' do
+target 'StorelinkProject' do
   react_native_modules()
   # config = use_native_modules!
 
@@ -82,7 +82,7 @@ target 'StoreLinkProject' do
   #   :app_path => "#{Pod::Config.instance.installation_root}/.."
   # )
 
-  target 'StoreLinkProjectTests' do
+  target 'StorelinkProjectTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -99,7 +99,7 @@ target 'StoreLinkProject' do
   # end
 end
 
-target 'StoreLink' do
+target 'Storelink' do
   react_native_modules()
 end
 

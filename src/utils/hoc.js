@@ -1,11 +1,11 @@
 import React from 'react'
-import CooklistSDK from 'react-native-cooklist'
+import Storelink from 'react-native-storelink'
 
-export const withCooklistSDKConsumer = (WrappedComponent) => {
+export const withStorelinkConsumer = (WrappedComponent) => {
   return class extends React.Component {
     render() {
       return (
-        <CooklistSDK.Consumer>
+        <Storelink.Consumer>
           {(params) => (
             <>
               <WrappedComponent
@@ -13,7 +13,7 @@ export const withCooklistSDKConsumer = (WrappedComponent) => {
                 {...params}/>
             </>
           )}
-        </CooklistSDK.Consumer>
+        </Storelink.Consumer>
       )
     }
   }

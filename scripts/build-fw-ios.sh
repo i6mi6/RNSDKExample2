@@ -1,7 +1,7 @@
-DIR=/Users/alexandervitanov/Projects/General/StoreLinkProject
+DIR=/Users/alexandervitanov/Projects/General/StorelinkProject
 
-PROJECT_NAME=StoreLinkProject
-FRAMEWORK_NAME=StoreLink
+PROJECT_NAME=StorelinkProject
+FRAMEWORK_NAME=Storelink
 OUT_BUILD_DIR=$DIR/ios/build
 OUT_FW_DIR=$DIR/ios/SDKOutput/Frameworks
 

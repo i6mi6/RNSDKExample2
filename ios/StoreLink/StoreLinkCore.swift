@@ -1,11 +1,11 @@
 //
-//  StoreLinkCore.swift
-//  StoreLink
+//  StorelinkCore.swift
+//  Storelink
 //
 import Foundation
 import UIKit
 
-public class StoreLinkCore {
+public class StorelinkCore {
     
     // Configuration for the SDK
     public struct Configuration {
@@ -65,19 +65,19 @@ public class StoreLinkCore {
           removeNotificationObservers()
         }
         
-        public class SDKViewController: StoreLinkViewController {
+        public class SDKViewController: StorelinkViewController {
         }
 
-        public func getBackgroundView() -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask)
+        public func getBackgroundView() -> StorelinkCoreView {
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask)
         }
 //        
-//        public func getStoreConnectionsListView() -> StoreLinkCoreView {
-//            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
+//        public func getStoreConnectionsListView() -> StorelinkCoreView {
+//            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
 //        }
       
-        public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StoreLinkCoreView {
-            return StoreLinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
+        public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete)
         }
 
         private func setupNotificationObservers() {
@@ -129,7 +129,7 @@ public class StoreLinkCore {
 
         // The method to open a UI based on the specified presentation method
         // public func open(presentUsing method: PresentationMethod) {
-        //     let sdkUI = StoreLinkViewController()
+        //     let sdkUI = StorelinkViewController()
             
         //     switch method {
         //     case .presentModally(let parentVC):
