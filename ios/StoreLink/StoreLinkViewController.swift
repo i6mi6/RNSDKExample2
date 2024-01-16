@@ -44,14 +44,16 @@ open class StorelinkViewController: UIViewController {
     var functionParams: [AnyHashable: Any]?
     var onComplete: (([AnyHashable: Any]) -> Void)?
     var brandName: String?
+    var logoUrl: String?
 
-    init(refreshToken: String, viewType: ViewType, logLevel: LogLevel?, functionParams: [AnyHashable: Any]?, onComplete: (([AnyHashable: Any]) -> Void)?, brandName: String?) {
+    init(refreshToken: String, viewType: ViewType, logLevel: LogLevel?, functionParams: [AnyHashable: Any]?, onComplete: (([AnyHashable: Any]) -> Void)?, brandName: String?, logoUrl: String?) {
         self.refreshToken = refreshToken
         self.viewType = viewType
         self.logLevel = logLevel
         self.functionParams = functionParams
         self.onComplete = onComplete
         self.brandName = brandName
+        self.logoUrl = logoUrl
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -91,7 +93,8 @@ open class StorelinkViewController: UIViewController {
                 "logLevel": logLevel?.intValue,
                 "viewType": viewType.stringValue,
                 "viewUUID": viewUUID,
-                "brandName": brandName
+                "brandName": brandName,
+                "logoUrl": logoUrl
             ]
             if let functionParams = functionParams {
                 initialProperties["functionParams"] = functionParams

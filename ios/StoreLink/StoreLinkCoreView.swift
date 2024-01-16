@@ -11,6 +11,7 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
     var functionParams: [AnyHashable: Any]?
     var onComplete: (([AnyHashable: Any]) -> Void)?
     var brandName: String?
+    var logoUrl: String?
 
     public init(
       refreshToken: String,
@@ -18,7 +19,8 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
       viewType: ViewType = .backgroundTask,
       functionParams: [AnyHashable: Any]? = nil,
       onComplete: (([AnyHashable: Any]) -> Void)? = nil,
-      brandName: String? = nil
+      brandName: String? = nil,
+      logoUrl: String? = nil
     ) {
         self.refreshToken = refreshToken
         self.viewType = viewType
@@ -26,6 +28,7 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
         self.functionParams = functionParams
         self.onComplete = onComplete
         self.brandName = brandName
+        self.logoUrl = logoUrl
     }
   
     public typealias UIViewControllerType = UINavigationController
@@ -38,7 +41,8 @@ public struct StorelinkCoreView: UIViewControllerRepresentable {
         logLevel: logLevel,
         functionParams: functionParams,
         onComplete: onComplete,
-        brandName: brandName
+        brandName: brandName,
+        logoUrl: logoUrl
       )
         let navigationController = UINavigationController(rootViewController: sdkVC)
         return navigationController
