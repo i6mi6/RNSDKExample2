@@ -25,6 +25,9 @@ class InnerContainer extends React.Component {
     if (viewType === VIEW_TYPE.CONNECT_UPDATE_STORE) {
       return <ConnectStoreContainerView {...this.props} />
     }
+    if (viewType === VIEW_TYPE.TRANSFER_CART) {
+      return <TransferCartContainerView {...this.props} />
+    }
     // if (viewType === VIEW_TYPE.STORE_CONNECTIONS_LIST) {
     //   return <StoreConnectionsListContainerView {...this.props} />
     // }
@@ -84,6 +87,58 @@ class ConnectStoreInnerContainerPure extends React.Component {
 const ConnectStoreInnerContainer = compose(
   withStorelinkConsumer,
 )(ConnectStoreInnerContainerPure)
+
+
+class TransferCartContainerView extends React.Component {
+
+  state = {
+    flowDisplayed: false,
+  }
+
+  onViewComplete = (payload) => {
+    try {
+      if (this.props.onViewComplete) {
+        this.props.onViewComplete(payload)
+      }
+      this.setState({ flowDisplayed: true })
+    } catch (error) {
+      logEventDev(this.props.logLevel, error)
+    }
+  }
+
+  render() {
+    const { flowDisplayed } = this.state
+    if (flowDisplayed) {
+      return null
+    }
+    return (
+      <TransferCartInnerContainer
+        {...this.props}
+        onComplete={this.onViewComplete}/>
+    )
+  }
+}
+
+class TransferCartInnerContainerPure extends React.Component {
+
+  componentDidMount() {
+    if (_.get(this.props, 'functionParams.cartId')) {
+      this.props.transferShoppingCart({
+        cartId: this.props.functionParams.cartId,
+        onComplete: this.props.onComplete,
+      })
+    }
+  }
+
+  render() {
+    return null
+  }
+}
+
+const TransferCartInnerContainer = compose(
+  withStorelinkConsumer,
+)(TransferCartInnerContainerPure)
+
 
 class StoreConnectionsListContainerViewPure extends React.Component {
 

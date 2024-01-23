@@ -85,6 +85,10 @@ public class StorelinkCore {
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
             return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl)
         }
+      
+        public func getTransferCartView(cartId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .transferCart, functionParams: ["cartId": cartId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl)
+        }
 
         private func setupNotificationObservers() {
             NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in

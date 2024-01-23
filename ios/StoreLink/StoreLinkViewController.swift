@@ -9,12 +9,14 @@ public enum ViewType {
     case backgroundTask
     case storeConnectionsList
     case connectUpdateStore
+    case transferCart
 
     var stringValue: String {
         switch self {
             case .backgroundTask: return "BACKGROUND_TASK"
             case .storeConnectionsList: return "STORE_CONNECTIONS_LIST"
             case .connectUpdateStore: return "CONNECT_UPDATE_STORE"
+            case .transferCart: return "TRANSFER_CART"
         }
     }
 }
