@@ -290,7 +290,7 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-storelink (0.1.1):
+  - react-native-storelink (0.1.4):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - react-native-webview (13.6.4):
@@ -580,7 +580,7 @@ SPEC CHECKSUMS:
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
   react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
-  react-native-storelink: d6b0f590ceb7f1f29c44769b8416b76b20daf4fd
+  react-native-storelink: e4b2681c6d56348a27324b0d235c9734866559fc
   react-native-webview: 121397a02eb58554c24d0c3e26acf676ff6a87d2
   React-NativeModulesApple: f8bb09486c8ba5b44a309123b1d1558faa90c13d
   React-perflogger: e3596db7e753f51766bceadc061936ef1472edc3
@@ -605,6 +605,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
 
-PODFILE CHECKSUM: 6d86cbdb20a0c72accc4621ba32769071c5f4135
+PODFILE CHECKSUM: 94c0fad9739bccfbf0f26819c399f694c4074057
 
 COCOAPODS: 1.11.3
