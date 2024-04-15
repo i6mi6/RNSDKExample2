@@ -1,9 +1,9 @@
 {
   "name": "Storelink",
-  "version": "2.0.37",
-  "description": "Description of Storelink",
+  "version": "0.1.6",
+  "description": "Storelink for iOS",
   "author": "Cooklist",
   "homepage": "https://cooklist.com",
-  "license": "©2023 Cooklist. All rights reserved",
+  "license": "©2024 Cooklist. All rights reserved",
   "repository": "https://cooklist.com"
 }

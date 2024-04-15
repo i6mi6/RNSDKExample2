@@ -10,6 +10,7 @@ public enum ViewType {
     case storeConnectionsList
     case connectUpdateStore
     case transferCart
+    case deviceUuid
 
     var stringValue: String {
         switch self {
@@ -17,6 +18,7 @@ public enum ViewType {
             case .storeConnectionsList: return "STORE_CONNECTIONS_LIST"
             case .connectUpdateStore: return "CONNECT_UPDATE_STORE"
             case .transferCart: return "TRANSFER_CART"
+            case .deviceUuid: return "DEVICE_UUID"
         }
     }
 }

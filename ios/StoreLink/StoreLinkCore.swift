@@ -11,6 +11,7 @@ public class StorelinkCore {
     public struct Configuration {
         let refreshToken: String
         let logLevel: LogLevel?
+        let onConfigurationSuccess: (([AnyHashable: Any]) -> Void)?
         let onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         let onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
         let onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
@@ -20,6 +21,7 @@ public class StorelinkCore {
         public init(
             refreshToken: String,
             logLevel: LogLevel? = nil,
+            onConfigurationSuccess: (([AnyHashable: Any]) -> Void)? = nil,
             onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onInvoiceEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
@@ -28,6 +30,7 @@ public class StorelinkCore {
         ) {
             self.refreshToken = refreshToken
             self.logLevel = logLevel
+            self.onConfigurationSuccess = onConfigurationSuccess
             self.onStoreConnectionEvent = onStoreConnectionEvent
             self.onInvoiceEvent = onInvoiceEvent
             self.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent
@@ -55,12 +58,14 @@ public class StorelinkCore {
         
         private var config: Configuration
         private var notificationName = Notification.Name("cooklist_sdk_event")
+        private var onConfigurationSuccess: (([AnyHashable: Any]) -> Void)?
         private var onStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         private var onInvoiceEvent: (([AnyHashable: Any]) -> Void)?
         private var onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         
         public init(config: Configuration) {
             self.config = config
+            self.onConfigurationSuccess = config.onConfigurationSuccess
             self.onStoreConnectionEvent = config.onStoreConnectionEvent
             self.onInvoiceEvent = config.onInvoiceEvent
             self.onCheckingStoreConnectionEvent = config.onCheckingStoreConnectionEvent
@@ -95,6 +100,8 @@ public class StorelinkCore {
                 if let params = notification.userInfo as? [String: Any],
                 let functionName = params["functionName"] as? String {
                     switch functionName {
+                    case "onConfigurationSuccess":
+                        self.onConfigurationSuccess?(params)
                     case "onStoreConnectionEvent":
                         self.onStoreConnectionEvent?(params)
                     case "onInvoiceEvent":

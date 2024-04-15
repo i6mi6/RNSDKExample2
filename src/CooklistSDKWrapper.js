@@ -37,9 +37,22 @@ class CooklistSDKWrapper extends React.Component {
       } else {
         logEventDebug(this.props.logLevel, `Error initializing CooklistSDK: ${sdkResponse.message}`)
       }
+      const deviceUuid = Storelink.getDeviceUuid()
+      logEventDev(this.props.logLevel, `deviceUuid: ${deviceUuid}`)
+      this.onConfigurationSuccess({
+        deviceUuid,
+      })
     } catch (error) {
       logError(error)
     }
+  }
+
+  onConfigurationSuccess = (payload) => {
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+      functionName: 'onConfigurationSuccess',
+      ...payload,
+    })
+    logEventDev(this.props.logLevel, `[REACT NATIVE] onConfigurationSuccess:`, payload)
   }
 
   onStoreConnectionEvent = ({ storeConnectionId, credentialsStatus }) => {
@@ -91,6 +104,9 @@ class CooklistSDKWrapper extends React.Component {
     const { viewType, functionParams } = this.props
     const { loading } = this.state
     logEventDebug(this.props.logLevel, '[REACT NATIVE] props:', this.props)
+    if (viewType === VIEW_TYPE.DEVICE_UUID) {
+      return null
+    }
     if (loading) {
       if (viewType === VIEW_TYPE.BACKGROUND_TASK) {
         return null
