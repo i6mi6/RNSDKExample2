@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "build-sdk-ios": "sh scripts/bundle-ios.sh && sh scripts/build-fw-ios.sh",
-    "clean-build-sdk-ios": "yarn cache clean && yarn && yarn build-sdk-ios"
+    "clean-build-sdk-ios": "yarn cache clean && rm -rf node_modules && yarn && yarn build-sdk-ios"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.3",
