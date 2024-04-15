@@ -10863,9 +10863,9 @@ react-native-safe-area-view@^0.14.9:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-"react-native-storelink@file:../react-native-storelink/react-native-storelink-internal-0.1.6.tgz":
-  version "0.1.6"
-  resolved "file:../react-native-storelink/react-native-storelink-internal-0.1.6.tgz#1ce7e4284ea95a985c5565c636ba8f762deff3d5"
+"react-native-storelink@file:../react-native-storelink/react-native-storelink-internal-0.1.9-local.tgz":
+  version "0.1.9-local"
+  resolved "file:../react-native-storelink/react-native-storelink-internal-0.1.9-local.tgz#18dd0ef5ba67ae045f102a98f1754123c0b8632e"
   dependencies:
     "@apollo/client" "3.3.20"
     "@react-native-cookies/cookies" "^6.2.1"

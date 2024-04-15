@@ -17,6 +17,7 @@ public class StorelinkCore {
         let onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)?
         let brandName: String?
         let logoUrl: String?
+        let _devApiLocation: String?
         // Add a public initializer
         public init(
             refreshToken: String,
@@ -26,7 +27,8 @@ public class StorelinkCore {
             onInvoiceEvent: (([AnyHashable: Any]) -> Void)? = nil,
             onCheckingStoreConnectionEvent: (([AnyHashable: Any]) -> Void)? = nil,
             brandName: String? = nil,
-            logoUrl: String? = nil
+            logoUrl: String? = nil,
+            _devApiLocation: String? = nil
         ) {
             self.refreshToken = refreshToken
             self.logLevel = logLevel
@@ -36,6 +38,7 @@ public class StorelinkCore {
             self.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent
             self.brandName = brandName
             self.logoUrl = logoUrl
+            self._devApiLocation = _devApiLocation
         }
     }
     
@@ -80,7 +83,7 @@ public class StorelinkCore {
         }
 
         public func getBackgroundView() -> StorelinkCoreView {
-            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask)
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask, _devApiLocation: config._devApiLocation)
         }
 //        
 //        public func getStoreConnectionsListView() -> StorelinkCoreView {
@@ -88,11 +91,11 @@ public class StorelinkCore {
 //        }
       
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
-            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl)
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl, _devApiLocation: config._devApiLocation)
         }
       
         public func getTransferCartView(cartId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
-            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .transferCart, functionParams: ["cartId": cartId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl)
+            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .transferCart, functionParams: ["cartId": cartId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl, _devApiLocation: config._devApiLocation)
         }
 
         private func setupNotificationObservers() {
