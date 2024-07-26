@@ -10,18 +10,20 @@
     "lint": "eslint .",
     "build-sdk-ios": "yarn && sh scripts/bundle-ios.sh && sh scripts/build-fw-ios.sh",
     "clean-build-sdk-ios": "yarn cache clean && rm -rf node_modules && yarn && yarn build-sdk-ios",
-    "build-sdk-android": "sh scripts/bundle-android.sh && sh scripts/build-fw-android.sh"
+    "build-sdk-android": "sh scripts/bundle-android.sh && sh scripts/build-fw-android.sh",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-cookies/cookies": "^6.2.1",
+    "hermes-engine": "^0.11.0",
     "lodash": "4.17.21",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-background-fetch": "^4.2.1",
-    "react-native-storelink": "git+ssh://git@github.com/Cooklist/react-native-storelink.git",
     "react-native-gesture-handler": "2.13.3",
     "react-native-safe-area-context": "4.4.1",
+    "react-native-storelink": "/Users/alexandervitanov/Projects/General/react-native-storelink/react-native-storelink-internal-0.1.26.tgz",
     "react-native-webview": "^13.6.4",
     "recompose": "0.30.0"
   },
@@ -70,6 +72,7 @@
     "metro": "^0.64.0",
     "metro-core": "^0.64.0",
     "metro-react-native-babel-preset": "^0.67.0",
+    "patch-package": "^8.0.0",
     "path": "^0.12.7",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "17.0.2",

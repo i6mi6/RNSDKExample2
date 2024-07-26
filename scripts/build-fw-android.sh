@@ -1,5 +1,5 @@
 DIR=$PWD
-RN_AAR=$DIR/node_modules/react-native/android/com/facebook/react/react-native/0.72.6/react-native-0.72.6.aar
+# RN_AAR is not needed anymore
 HERMES_AAR=$DIR/node_modules/hermes-engine/android/hermes-release.aar
 
 BUILD_LIBS=$DIR/android/build/libs
@@ -21,5 +21,5 @@ find . -name "*-release.aar" | while read f; do
 done
 cd -
 
-cp $RN_AAR $OUTPUT/libs
+# cp $RN_AAR $OUTPUT/libs is not needed anymore
 cp $HERMES_AAR $OUTPUT/libs

@@ -2,13 +2,12 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "33.0.0"
+        buildToolsVersion = "34.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 33
-        targetSdkVersion = 33
-
-        // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
-        ndkVersion = "23.1.7779620"
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        ndkVersion = "25.1.8937393"
+        kotlinVersion = "1.8.0"
     }
     repositories {
         google()
@@ -17,6 +16,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
@@ -49,43 +49,48 @@ allprojects {
     }
 }
 
-subprojects {
-    afterEvaluate {
-        project ->
-            if (project.hasProperty("android")) {
-                android {
-                    compileSdkVersion = 34
-                    buildToolsVersion = "33.0.0"
-                    compileOptions {
-                        sourceCompatibility JavaVersion.VERSION_1_8
-                        targetCompatibility JavaVersion.VERSION_1_8
-                    }
-                    lintOptions {
-                        abortOnError false
+// Move the getDeps task outside the subprojects block
+tasks.register('getDeps') {
+    doFirst {
+        def dependencies = []
+        subprojects.each { project ->
+            if (project.name != "storelink") {
+                def arr = project.configurations.getByName("implementation").allDependencies
+                arr.each { dep ->
+                    if (dep.group != null && dep.group != "storelink" && dep.name != "react-native") {
+                        dependencies += "${dep.group}:${dep.name}:${dep.version}"
                     }
                 }
             }
+        }
+        def str = ""
+        dependencies.each {
+            str += it + "\n"
+        }
+        new File("${rootDir}/SDKOutput", "libs.txt").text = str
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion = 34
+                buildToolsVersion = "33.0.0"
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_1_8
+                    targetCompatibility JavaVersion.VERSION_1_8
+                }
+                lintOptions {
+                    abortOnError false
+                }
+            }
+        }
     }
 }
 
 // Get all dependencies
 def dependencies = []
-
-tasks.register('getDeps') {
-    subprojects {
-        afterEvaluate {
-            project ->
-                if (project.name != "storelink") {
-                    def arr = project.configurations.getByName("implementation").allDependencies + project.configurations.getByName("compile").allDependencies
-                    arr.each { dep ->
-                        if (dep.group != null && dep.group != "storelink" && dep.name != "react-native") {
-                            dependencies += "${dep.group}:${dep.name}:${dep.version}"
-                        }
-                    }
-                }
-        }
-    }
-}
 
 tasks.register('createGradleFile') {
     doFirst {
@@ -96,5 +101,4 @@ tasks.register('createGradleFile') {
         new File("${rootDir}/SDKOutput", "libs.txt").text = str
     }
     finalizedBy 'getDeps'
-
 }

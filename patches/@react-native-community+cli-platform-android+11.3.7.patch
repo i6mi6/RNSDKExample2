@@ -1,0 +1,45 @@
+diff --git a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+index 8a218d5..67c514d 100644
+--- a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
++++ b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+@@ -138,7 +138,6 @@ void rncli_registerProviders(std::shared_ptr<ComponentDescriptorProviderRegistry
+ 
+ class ReactNativeModules {
+   private Logger logger
+-  private String packageName
+   private File root
+   private ArrayList<HashMap<String, String>> reactNativeModules
+   private ArrayList<String> unstable_reactLegacyComponentNames
+@@ -146,6 +145,8 @@ class ReactNativeModules {
+ 
+   private static String LOG_PREFIX = ":ReactNative:"
+ 
++  public String packageName
++
+   ReactNativeModules(Logger logger, File root) {
+     this.logger = logger
+     this.root = root
+@@ -497,12 +498,21 @@ ext.applyNativeModulesSettingsGradle = { DefaultSettings defaultSettings, String
+   autoModules.addReactNativeModuleProjects(defaultSettings)
+ }
+ 
+-ext.applyNativeModulesAppBuildGradle = { Project project, String root = null ->
++ext.applyNativeModulesAppBuildGradle = { Project project, String root = null, Boolean useApi = false, String packageName = null ->
+   if (root != null) {
+     logger.warn("${ReactNativeModules.LOG_PREFIX}Passing custom root is deprecated. CLI detects root automatically now");
+     logger.warn("${ReactNativeModules.LOG_PREFIX}Please remove second argument to `applyNativeModulesAppBuildGradle`.");
+   }
+-  autoModules.addReactNativeModuleDependencies(project)
++
++  if (useApi) {
++    autoModules.addReactNativeModuleDependenciesUseApi(project)
++  } else {
++    autoModules.addReactNativeModuleDependencies(project)
++  }
++
++  if (packageName != null) {
++    autoModules.packageName = packageName
++  }
+ 
+   def generatedSrcDir = new File(buildDir, "generated/rncli/src/main/java")
+   def generatedCodeDir = new File(generatedSrcDir, generatedFilePackage.replace('.', '/'))
