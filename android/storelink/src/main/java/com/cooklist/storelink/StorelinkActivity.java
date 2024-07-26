@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.cooklistsdk.BuildConfig;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -33,7 +32,7 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
                 .setBundleAssetName("storelink.jsbundle")
                 .setJSMainModulePath("index")
                 .addPackages(packages)
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setUseDeveloperSupport(false)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 

@@ -1,14 +1,14 @@
 if [ "${OS_NAME}" = "linux" ]; then
-  HERMES=./node_modules/hermes-engine/linux64-bin/hermes
+  HERMES=./node_modules/react-native/sdks/hermesc/linux64-bin/hermesc
 else
-  HERMES=./node_modules/hermes-engine/osx-bin/hermes
+  HERMES=./node_modules/react-native/sdks/hermesc/osx-bin/hermesc
 fi
 
 CLI_PATH=./node_modules/react-native/local-cli/cli.js
 COMPOSE_SOURCE_MAPS_PATH=./node_modules/react-native/scripts/compose-source-maps.js
 
-INTEGRATION_MODULE_FOLDER=android/RNSDK/src/main
-BUNDLE_NAME=rnsdk.jsbundle
+INTEGRATION_MODULE_FOLDER=android/storelink/src/main
+BUNDLE_NAME=storelink.jsbundle
 
 if [ -d "${INTEGRATION_MODULE_FOLDER}/assets" ]; then
   rm -rf $INTEGRATION_MODULE_FOLDER/assets
@@ -53,3 +53,4 @@ find $INTEGRATION_MODULE_FOLDER/assets -name "*.map" -type f -delete
 
 # Remove json files
 find $INTEGRATION_MODULE_FOLDER/res -name "*.json" -type f -delete
+pwd

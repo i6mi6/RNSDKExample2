@@ -1,5 +1,5 @@
 DIR=$PWD
-RN_AAR=$DIR/node_modules/react-native/android/com/facebook/react/react-native/0.61.5/react-native-0.61.5.aar
+RN_AAR=$DIR/node_modules/react-native/android/com/facebook/react/react-native/0.72.6/react-native-0.72.6.aar
 HERMES_AAR=$DIR/node_modules/hermes-engine/android/hermes-release.aar
 
 BUILD_LIBS=$DIR/android/build/libs
