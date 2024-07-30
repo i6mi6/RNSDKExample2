@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'com.facebook.react'
 }
 
 def jscFlavor = 'org.webkit:android-jsc:+'
@@ -23,6 +24,7 @@ dependencies {
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation project(':app')
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
@@ -30,4 +32,4 @@ dependencies {
     }
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project, null, false, "com.cooklist.storelink")
+//apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project, null, false, "com.cooklist.storelink")
