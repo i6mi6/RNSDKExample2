@@ -13,7 +13,7 @@ public class StorelinkModuleBridge extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "StorelinkModuleBridge";
+        return "StorelinkModule";
     }
 
     @ReactMethod

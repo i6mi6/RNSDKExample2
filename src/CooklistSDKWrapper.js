@@ -3,7 +3,7 @@ import { ActivityIndicator, NativeModules, View } from 'react-native'
 import Storelink from 'react-native-storelink'
 import InnerContainer from './InnerContainer'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
-import { logError, logEventDebug, logEventDev } from './utils/util'
+import { LOG_LEVEL, logError, logEventDebug, logEventDev } from './utils/util'
 const { StorelinkModule } = NativeModules
 
 class CooklistSDKWrapper extends React.Component {
@@ -19,17 +19,30 @@ class CooklistSDKWrapper extends React.Component {
   initialSetup = async () => {
     try {
       const { viewType, logLevel, refreshToken, brandName, logoUrl, _devApiLocation } = this.props
+
+      StorelinkModule.sampleMethod('test', console.log)
+
       const [sdkResponse] = await Promise.all([
+        // Storelink.configure({
+        //   refreshToken,
+        //   onStoreConnectionEvent: this.onStoreConnectionEvent,
+        //   onInvoiceEvent: this.onInvoiceEvent,
+        //   onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
+        //   _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
+        //   _devApiLocation: _devApiLocation,
+        //   _logLevel: logLevel,
+        //   brandName,
+        //   logoUrl,
+        // }),
         Storelink.configure({
-          refreshToken,
+          refreshToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2ODMxMjEsIm9pZCI6MTAwOSwidmVyc2lvbiI6MSwianRpIjoiYjFjYjgzMWItMmY0MS00YTg1LThhNTUtMDk5M2U4MGY3OTBiIiwiaXNzdWVkX2F0IjoxNzIyMzY5NTQxLjk3MzE5NSwiZXhwaXJlc19hdCI6MTc1MzkwNTU0MS45NzMxOTUsInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.BsjOG1ZwtuHx51xntqnnGrt5KWZ2_WKHrio0QeeuqZM',
           onStoreConnectionEvent: this.onStoreConnectionEvent,
           onInvoiceEvent: this.onInvoiceEvent,
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
-          _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
-          _devApiLocation: _devApiLocation,
-          _logLevel: logLevel,
-          brandName,
-          logoUrl,
+          _devApiLocation: 'http://192.168.0.10:8000/gql',
+          _logLevel: LOG_LEVEL.DEV,
+          brandName: 'Cooklist',
+          logoUrl: 'https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ',
         }),
       ])
       if (sdkResponse.success) {

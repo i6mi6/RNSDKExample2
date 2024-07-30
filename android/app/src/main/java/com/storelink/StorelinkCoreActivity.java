@@ -1,4 +1,4 @@
-package com.storelinksdk;
+package com.storelink;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.storelinksdk;
+package com.storelink;
 
 public enum LogLevel {
     NONE,
