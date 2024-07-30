@@ -1,7 +1,5 @@
-//
-//  StorelinkCoreView.swift
-//  Storelink
-//
+package com.storelinksdk;
+
 import android.content.Context;
 import android.view.View;
 import androidx.annotation.NonNull;

@@ -1,60 +1,27 @@
-//
-//  StorelinkViewController.swift
-//  Storelink
-//
-import android.app.Activity;
+package com.storelinksdk;
+
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.facebook.react.BuildConfig;
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactPackage;
+import com.facebook.react.ReactRootView;
+import com.facebook.react.common.LifecycleState;
+import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
+import com.facebook.soloader.SoLoader;
+import com.facebook.react.PackageList;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public enum ViewType {
-    BACKGROUND_TASK,
-    STORE_CONNECTIONS_LIST,
-    CONNECT_UPDATE_STORE,
-    TRANSFER_CART,
-    DEVICE_UUID;
 
-    public String getStringValue() {
-        switch (this) {
-            case BACKGROUND_TASK:
-                return "BACKGROUND_TASK";
-            case STORE_CONNECTIONS_LIST:
-                return "STORE_CONNECTIONS_LIST";
-            case CONNECT_UPDATE_STORE:
-                return "CONNECT_UPDATE_STORE";
-            case TRANSFER_CART:
-                return "TRANSFER_CART";
-            case DEVICE_UUID:
-                return "DEVICE_UUID";
-            default:
-                throw new IllegalArgumentException("Unknown ViewType");
-        }
-    }
-}
-
-public enum LogLevel {
-    NONE,
-    DEBUG,
-    DEV;
-
-    public int getIntValue() {
-        switch (this) {
-            case NONE:
-                return 1;
-            case DEBUG:
-                return 2;
-            case DEV:
-                return 3;
-            default:
-                throw new IllegalArgumentException("Unknown LogLevel");
-        }
-    }
-}
-
-public class StorelinkCoreActivity extends Activity {
+public class StorelinkCoreActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+    private LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
     private String viewUUID = UUID.randomUUID().toString();
     private String viewCompleteNotificationName = "cooklist_sdk_view_complete_event";
 
@@ -66,6 +33,15 @@ public class StorelinkCoreActivity extends Activity {
     private String brandName;
     private String logoUrl;
     private String devApiLocation;
+
+    //
+    private ReactRootView mReactRootView;
+    private ReactInstanceManager mReactInstanceManager;
+
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        super.onBackPressed();
+    }
 
     public interface OnCompleteListener {
         void onComplete(Map<String, Object> data);
@@ -89,7 +65,7 @@ public class StorelinkCoreActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Additional initialization code can be added here
+        setupView();
     }
 
     @Override
@@ -108,6 +84,27 @@ public class StorelinkCoreActivity extends Activity {
             // You would need to implement a way to broadcast this data, similar to NotificationCenter in iOS
             // For example, you could use LocalBroadcastManager or create a custom event bus
         }
+    }
+
+    private void setupView() {
+        SoLoader.init(this, false);
+
+        mReactRootView = new ReactRootView(this);
+        List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
+
+        mReactInstanceManager = ReactInstanceManager.builder()
+                .setApplication(getApplication())
+                .setCurrentActivity(this)
+                .setBundleAssetName("storelink.jsbundle")
+                .setJSMainModulePath("index")
+                .addPackages(packages)
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setInitialLifecycleState(LifecycleState.RESUMED)
+                .build();
+
+        mReactRootView.startReactApplication(mReactInstanceManager, "StorelinSDK", null);
+
+        setContentView(mReactRootView);
     }
 
     // Additional methods and logic can be added here
