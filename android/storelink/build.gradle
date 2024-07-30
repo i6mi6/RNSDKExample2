@@ -5,7 +5,7 @@ plugins {
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
-    namespace 'com.cooklist.storelink'
+    namespace 'com.storelink'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -20,15 +20,13 @@ android {
 }
 
 dependencies {
-
-//    implementation("com.facebook.react:react-native:+")
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-    if (hermesEnabled.toBoolean()) {
+    if (rootProject.ext.hermesEnabled) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project, null, false, "com.cooklist.storelink")
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project, null, false, "com.storelink")
