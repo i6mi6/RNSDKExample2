@@ -57,7 +57,7 @@ tasks.register('getDeps') {
             if (project.name != "storelink") {
                 def arr = project.configurations.getByName("implementation").allDependencies
                 arr.each { dep ->
-                    if (dep.group != null && dep.group != "storelink" && dep.name != "react-native") {
+                    if (dep.group != null && dep.group != "storelink") {
                         dependencies += "${dep.group}:${dep.name}:${dep.version}"
                     }
                 }

@@ -108,6 +108,10 @@ dependencies {
     implementation project(':storelink')
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    def core_version = "1.13.1"
+
+    // Java language implementation
+    implementation "androidx.core:core:$core_version"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
