@@ -85,10 +85,6 @@ public class StorelinkCore {
         public func getBackgroundView() -> StorelinkCoreView {
             return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .backgroundTask, _devApiLocation: config._devApiLocation)
         }
-//        
-//        public func getStoreConnectionsListView() -> StorelinkCoreView {
-//            return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .storeConnectionsList)
-//        }
       
         public func getConnectUpdateStoreView(storeId: String, onComplete: (([AnyHashable: Any]) -> Void)? = nil) -> StorelinkCoreView {
             return StorelinkCoreView(refreshToken: config.refreshToken, logLevel: config.logLevel, viewType: .connectUpdateStore, functionParams: ["storeId": storeId], onComplete: onComplete, brandName: config.brandName, logoUrl: config.logoUrl, _devApiLocation: config._devApiLocation)
@@ -126,47 +122,6 @@ public class StorelinkCore {
             NotificationCenter.default.post(name: Notification.Name("CooklistDataFromNative"), object: nil, userInfo: data)
         }
 
-        // public func sendDataToReactNativeAndWait(data: [AnyHashable: Any]) async throws -> [AnyHashable: Any]? {
-
-        //     sendDataToReactNative(data: data)
-
-        //     // Use Task for timeout handling; 10s limit
-        //     return try await withCheckedThrowingContinuation { continuation in
-        //         let timeoutTask = Task {
-        //             try await Task.sleep(nanoseconds: UInt64(10_000_000_000))
-        //             continuation.resume(throwing: SDKError.nativeCommunicationError)
-        //         }
-
-        //         NotificationCenter.default.addObserver(forName: self.notificationName, object: nil, queue: .main) { notification in
-        //             timeoutTask.cancel()  // Cancel the timeout task if we receive a response
-
-        //             if let params = notification.userInfo {
-        //                 continuation.resume(returning: params)
-        //             }
-        //         }
-        //     }
-        // }
-
-        // The method to open a UI based on the specified presentation method
-        // public func open(presentUsing method: PresentationMethod) {
-        //     let sdkUI = StorelinkViewController()
-            
-        //     switch method {
-        //     case .presentModally(let parentVC):
-        //         let navigationController = UINavigationController(rootViewController: sdkUI)
-        //         parentVC.present(navigationController, animated: true)
-                
-        //     case .pushOnNavigationStack(let navigationController):
-        //         navigationController.pushViewController(sdkUI, animated: true)
-                
-        //     case .embedInTab(let tabBarController, let position):
-        //         if let index = position, index < tabBarController.viewControllers?.count ?? 0 {
-        //             tabBarController.viewControllers?.insert(sdkUI, at: index)
-        //         } else {
-        //             tabBarController.viewControllers?.append(sdkUI)
-        //         }
-        //     }
-        // }
     }
     
     // Create a handler based on configuration
