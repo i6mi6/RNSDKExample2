@@ -1,0 +1,9 @@
+com.transistorsoft:tsbackgroundfetch:+
+androidx.lifecycle:lifecycle-runtime:2.4.1
+androidx.lifecycle:lifecycle-extensions:2.2.0
+androidx.appcompat:appcompat:1.2.0
+androidx.core:core-ktx:1.6.0
+org.jetbrains.kotlin:kotlin-stdlib:1.6.21
+org.jetbrains.kotlin:kotlin-stdlib:1.6.10
+org.jetbrains.kotlin:kotlin-stdlib:1.6.0
+androidx.webkit:webkit:1.4.0

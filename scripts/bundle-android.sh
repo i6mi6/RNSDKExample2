@@ -7,7 +7,7 @@ fi
 CLI_PATH=./node_modules/react-native/local-cli/cli.js
 COMPOSE_SOURCE_MAPS_PATH=./node_modules/react-native/scripts/compose-source-maps.js
 
-INTEGRATION_MODULE_FOLDER=android/storelink/src/main
+INTEGRATION_MODULE_FOLDER=android/app/src/main
 BUNDLE_NAME=storelink.jsbundle
 
 if [ -d "${INTEGRATION_MODULE_FOLDER}/assets" ]; then
