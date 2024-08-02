@@ -1,4 +1,4 @@
-package com.cooklist.storelink;
+package com.storelink;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
