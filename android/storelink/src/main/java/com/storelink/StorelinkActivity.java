@@ -1,105 +1,78 @@
 package com.storelink;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.facebook.react.PackageList;
-import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactPackage;
-import com.facebook.react.ReactRootView;
-import com.facebook.react.common.LifecycleState;
-import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.facebook.soloader.SoLoader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class StorelinkActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-    private ReactRootView mReactRootView;
-    private ReactInstanceManager mReactInstanceManager;
+public class StorelinkActivity extends AppCompatActivity {
+
+    private StorelinkCore.SDKHandler handler;
+    private String refreshToken = "your_refresh_token"; // You can set this from your config
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SoLoader.init(this, false);
+        setContentView(R.layout.activity_storelink);
 
-        mReactRootView = new ReactRootView(this);
-        List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
-        packages.add(new StorelinkPackage());
-
-        mReactInstanceManager = ReactInstanceManager.builder()
-                .setApplication(getApplication())
-                .setCurrentActivity(this)
-                .setBundleAssetName("index.android.bundle")
-                .setJSMainModulePath("index")
-                .addPackages(packages)
-                .setUseDeveloperSupport(false)
-                .setInitialLifecycleState(LifecycleState.RESUMED)
-                .build();
-
-        Map<String, Object> initialProps = new HashMap<>();
-        initialProps.put("refreshToken", "refreshToken");
-        Bundle bundle = new Bundle();
-        for(Map.Entry<String, Object> entry : initialProps.entrySet()){
-            bundle.putString(entry.getKey(), entry.getValue().toString());
-        }
-        mReactRootView.startReactApplication(mReactInstanceManager, "StorelinkProject", bundle);
-
-        setContentView(mReactRootView);
+        initializeSDK();
     }
 
-    @Override
-    public void invokeDefaultOnBackPressed() {
-        super.onBackPressed();
+    private void initializeSDK() {
+        StorelinkCore.Configuration config = new StorelinkCore.Configuration(
+                refreshToken,
+                LogLevel.DEV,
+                this::onConfigurationSuccess,
+                this::onStoreConnectionEvent,
+                this::onInvoiceEvent,
+                this::onCheckingStoreConnectionEvent,
+                "Cooklist",
+                "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ",
+                "http://localhost:8000/gql"
+        );
+
+        handler = StorelinkCore.create(config);
+
+        // Example of how to get a background view and add it to the activity
+        launchStorelinkViewController();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostPause(this);
-        }
+    private void launchStorelinkViewController() {
+        Intent intent = StorelinkViewController.createIntent(
+                this,
+                refreshToken,
+                ViewType.BACKGROUND_TASK,
+                LogLevel.DEV,
+                new HashMap<>(),
+                null,
+                "Cooklist",
+                "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ",
+                "http://localhost:8000/gql"
+        );
+        startActivity(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostResume(this, this);
-        }
+    private void onConfigurationSuccess(Map<String, Object> params) {
+        // Handle configuration success event
+        System.out.println("Configuration Success: " + params.toString());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostDestroy(this);
-        }
-        if (mReactRootView != null) {
-            mReactRootView.unmountReactApplication();
-        }
+    private void onStoreConnectionEvent(Map<String, Object> params) {
+        // Handle store connection event
+        System.out.println("Store Connection Event: " + params.toString());
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onBackPressed();
-        } else {
-            super.onBackPressed();
-        }
+    private void onInvoiceEvent(Map<String, Object> params) {
+        // Handle invoice event
+        System.out.println("Invoice Event: " + params.toString());
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
-            mReactInstanceManager.showDevOptionsDialog();
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
+    private void onCheckingStoreConnectionEvent(Map<String, Object> params) {
+        // Handle checking store connection event
+        System.out.println("Checking Store Connection Event: " + params.toString());
     }
 }

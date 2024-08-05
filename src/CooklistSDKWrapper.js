@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, NativeModules, View } from 'react-native'
+import { ActivityIndicator, NativeModules, Text, View } from 'react-native'
 import Storelink from 'react-native-storelink'
 import InnerContainer from './InnerContainer'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
@@ -19,6 +19,9 @@ class CooklistSDKWrapper extends React.Component {
   initialSetup = async () => {
     try {
       const { viewType, logLevel, refreshToken, brandName, logoUrl, _devApiLocation } = this.props
+      console.log('HELLO FROM RN!')
+      console.log({ refreshToken })
+      return
       const [sdkResponse] = await Promise.all([
         Storelink.configure({
           refreshToken,
@@ -26,7 +29,8 @@ class CooklistSDKWrapper extends React.Component {
           onInvoiceEvent: this.onInvoiceEvent,
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
           _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
-          _devApiLocation: _devApiLocation,
+          // _devApiLocation: _devApiLocation,
+          _devApiLocation: 'http://192.168.0.10:8000/gql',
           _logLevel: logLevel,
           brandName,
           logoUrl,
@@ -114,6 +118,7 @@ class CooklistSDKWrapper extends React.Component {
       }
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>TEST!!!123</Text>
           <ActivityIndicator />
         </View>
       )
