@@ -30,32 +30,17 @@ allprojects {
         }
 
         mavenLocal()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url("$rootDir/../node_modules/react-native/android")
-        }
-        maven {
-            // Android JSC is installed from npm
-            url("$rootDir/../node_modules/jsc-android/dist")
-        }
-
         google()
         maven { url 'https://jitpack.io' }
-
-        // Add hermes
-        flatDir {
-            dirs "$rootDir/../node_modules/hermes-engine/android"
-        }
     }
 }
 
-// Move the getDeps task outside the subprojects block
 tasks.register('getDeps') {
     doFirst {
         def dependencies = []
         subprojects.each { project ->
             if (project.name != "storelink") {
-                def arr = project.configurations.getByName("implementation").allDependencies
+                def arr = project.configurations.named("implementation").allDependencies
                 arr.each { dep ->
                     if (dep.group != null && dep.group != "storelink") {
                         dependencies += "${dep.group}:${dep.name}:${dep.version}"
