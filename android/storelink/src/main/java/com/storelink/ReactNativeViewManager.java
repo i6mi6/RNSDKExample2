@@ -13,6 +13,9 @@ import com.facebook.react.common.LifecycleState;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +41,7 @@ public class ReactNativeViewManager {
     }
 
     public ReactRootView createReactNativeView(Activity activity, String refreshToken, ViewType viewType, LogLevel logLevel,
-                                               Map<String, Object> functionParams, String brandName, String logoUrl, String devApiLocation) {
+                                               HashMap<String, String> functionParams, String brandName, String logoUrl, String devApiLocation) {
         mReactRootView = new ReactRootView(activity);
 
         Bundle initialProps = new Bundle();
@@ -50,9 +53,11 @@ public class ReactNativeViewManager {
 //        initialProps.putString("_devApiLocation", devApiLocation);
 
         if (functionParams != null) {
-            for (Map.Entry<String, Object> entry : functionParams.entrySet()) {
-                initialProps.putString(entry.getKey(), entry.getValue().toString());
+            Bundle functionParamsBundle = new Bundle();
+            for (Map.Entry<String, String> entry : functionParams.entrySet()) {
+                functionParamsBundle.putString(entry.getKey(), entry.getValue());
             }
+            initialProps.putBundle("functionParams", functionParamsBundle);
         }
 
         mReactRootView.startReactApplication(mReactInstanceManager, "StorelinkProject", initialProps);

@@ -1,5 +1,6 @@
 package com.storelink;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
@@ -19,17 +20,16 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        String refreshToken = intent.getStringExtra("refreshToken");
+        ViewType viewType = ViewType.valueOf(intent.getStringExtra("viewType"));
+        LogLevel logLevel = LogLevel.valueOf(intent.getStringExtra("logLevel"));
+        String brandName = intent.getStringExtra("brandName");
+        String logoUrl = intent.getStringExtra("logoUrl");
+        String devApiLocation = intent.getStringExtra("devApiLocation");
+        HashMap<String, String> functionParams = (HashMap<String, String>) intent.getSerializableExtra("functionParams");
+
         mReactNativeViewManager = new ReactNativeViewManager(getApplication(), this);
-
-        // Assuming these variables are set somewhere in your activity
-        String refreshToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5ODkxMzksIm9pZCI6MiwidmVyc2lvbiI6MSwianRpIjoiZjRkNGQzYTEtNzlkOC00MWQ3LTliMDYtZTk2MGU0MDFkODJmIiwiaXNzdWVkX2F0IjoxNzIyODk2NzE1LjIwMjg5OSwiZXhwaXJlc19hdCI6MTc1NDQzMjcxNS4yMDI4OTksInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.v0znSZXe_tIl-X1sRR3Vz2737pfBAcgDUU8mjHeau6Q";
-        ViewType viewType = ViewType.BACKGROUND_TASK;
-        LogLevel logLevel = LogLevel.DEV;
-        Map<String, Object> functionParams = new HashMap<>();
-        String brandName = "Cooklist";
-        String logoUrl = "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ";
-        String devApiLocation = "https://api.cooklist.com/gql";
-
         mReactRootView = mReactNativeViewManager.createReactNativeView(this, refreshToken, viewType, logLevel, functionParams, brandName, logoUrl, devApiLocation);
         setContentView(mReactRootView);
     }
