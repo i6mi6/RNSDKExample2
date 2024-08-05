@@ -1,4 +1,4 @@
-package com.cooklist.storelink;
+package com.storelink;
 import android.util.Log;
 
 import com.facebook.react.bridge.NativeModule;
