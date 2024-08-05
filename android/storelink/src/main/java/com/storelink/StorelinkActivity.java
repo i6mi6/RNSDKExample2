@@ -35,7 +35,7 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModulePath("index")
                 .addPackages(packages)
-                .setUseDeveloperSupport(false)
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
