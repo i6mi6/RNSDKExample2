@@ -12,8 +12,9 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.soloader.SoLoader;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StorelinkActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
     private ReactRootView mReactRootView;
@@ -26,6 +27,7 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
 
         mReactRootView = new ReactRootView(this);
         List<ReactPackage> packages = new PackageList(getApplication()).getPackages();
+        packages.add(new StorelinkPackage());
 
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
@@ -37,7 +39,13 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "StorelinkProject", null);
+        Map<String, Object> initialProps = new HashMap<>();
+        initialProps.put("refreshToken", "refreshToken");
+        Bundle bundle = new Bundle();
+        for(Map.Entry<String, Object> entry : initialProps.entrySet()){
+            bundle.putString(entry.getKey(), entry.getValue().toString());
+        }
+        mReactRootView.startReactApplication(mReactInstanceManager, "StorelinkProject", bundle);
 
         setContentView(mReactRootView);
     }
