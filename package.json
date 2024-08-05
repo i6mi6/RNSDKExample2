@@ -12,7 +12,7 @@
     "clean-build-sdk-ios": "yarn cache clean && rm -rf node_modules && yarn && yarn build-sdk-ios",
     "build-sdk-android-old": "sh scripts/bundle-android.sh && sh scripts/build-fw-android.sh",
     "build-sdk-android": "npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/storelink/src/main/assets/index.android.bundle --assets-dest android/storelink/src/main/res/ && cd android && ./gradlew :storelink:assembleRelease && cd ..",
-    "build-sdk-android-alex": "npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/storelink/src/main/assets/index.android.bundle --assets-dest android/storelink/src/main/res/ && cd android && ./gradlew :storelink:assembleRelease && cd .. && cp ./android/build/libs/Storelink/outputs/aar/storelink-release.aar /Users/alexandervitanov/Projects/General/app-android-storelink-example/app/libs/storelink-release.aar",
+    "build-sdk-android-alex": "npx react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/storelink/src/main/assets/index.android.bundle --assets-dest android/storelink/src/main/res/ && cd android && ./gradlew :storelink:clean :storelink:assembleRelease && cd .. && cp ./android/build/libs/Storelink/outputs/aar/* /Users/alexandervitanov/Projects/General/app-android-storelink-example/app/libs/",
     "postinstall": "patch-package"
   },
   "dependencies": {
