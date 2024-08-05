@@ -1,78 +1,72 @@
 package com.storelink;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
+import com.facebook.react.ReactRootView;
+import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StorelinkActivity extends AppCompatActivity {
-
-    private StorelinkCore.SDKHandler handler;
-    private String refreshToken = "your_refresh_token"; // You can set this from your config
+public class StorelinkActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+    private ReactNativeViewManager mReactNativeViewManager;
+    private ReactRootView mReactRootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_storelink);
 
-        initializeSDK();
+        mReactNativeViewManager = new ReactNativeViewManager(getApplication(), this);
+
+        // Assuming these variables are set somewhere in your activity
+        String refreshToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5ODkxMzksIm9pZCI6MiwidmVyc2lvbiI6MSwianRpIjoiZjRkNGQzYTEtNzlkOC00MWQ3LTliMDYtZTk2MGU0MDFkODJmIiwiaXNzdWVkX2F0IjoxNzIyODk2NzE1LjIwMjg5OSwiZXhwaXJlc19hdCI6MTc1NDQzMjcxNS4yMDI4OTksInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.v0znSZXe_tIl-X1sRR3Vz2737pfBAcgDUU8mjHeau6Q";
+        ViewType viewType = ViewType.BACKGROUND_TASK;
+        LogLevel logLevel = LogLevel.DEV;
+        Map<String, Object> functionParams = new HashMap<>();
+        String brandName = "Cooklist";
+        String logoUrl = "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ";
+        String devApiLocation = "https://api.cooklist.com/gql";
+
+        mReactRootView = mReactNativeViewManager.createReactNativeView(this, refreshToken, viewType, logLevel, functionParams, brandName, logoUrl, devApiLocation);
+        setContentView(mReactRootView);
     }
 
-    private void initializeSDK() {
-        StorelinkCore.Configuration config = new StorelinkCore.Configuration(
-                refreshToken,
-                LogLevel.DEV,
-                this::onConfigurationSuccess,
-                this::onStoreConnectionEvent,
-                this::onInvoiceEvent,
-                this::onCheckingStoreConnectionEvent,
-                "Cooklist",
-                "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ",
-                "http://localhost:8000/gql"
-        );
-
-        handler = StorelinkCore.create(config);
-
-        // Example of how to get a background view and add it to the activity
-        launchStorelinkViewController();
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        super.onBackPressed();
     }
 
-    private void launchStorelinkViewController() {
-        Intent intent = StorelinkViewController.createIntent(
-                this,
-                refreshToken,
-                ViewType.BACKGROUND_TASK,
-                LogLevel.DEV,
-                new HashMap<>(),
-                null,
-                "Cooklist",
-                "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ",
-                "http://localhost:8000/gql"
-        );
-        startActivity(intent);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mReactNativeViewManager.onPause(this);
     }
 
-    private void onConfigurationSuccess(Map<String, Object> params) {
-        // Handle configuration success event
-        System.out.println("Configuration Success: " + params.toString());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mReactNativeViewManager.onResume(this);
     }
 
-    private void onStoreConnectionEvent(Map<String, Object> params) {
-        // Handle store connection event
-        System.out.println("Store Connection Event: " + params.toString());
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mReactNativeViewManager.onDestroy(this);
     }
 
-    private void onInvoiceEvent(Map<String, Object> params) {
-        // Handle invoice event
-        System.out.println("Invoice Event: " + params.toString());
+    @Override
+    public void onBackPressed() {
+        mReactNativeViewManager.onBackPressed();
     }
 
-    private void onCheckingStoreConnectionEvent(Map<String, Object> params) {
-        // Handle checking store connection event
-        System.out.println("Checking Store Connection Event: " + params.toString());
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (mReactNativeViewManager.onKeyUp(keyCode)) {
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }

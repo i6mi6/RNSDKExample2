@@ -19,9 +19,6 @@ class CooklistSDKWrapper extends React.Component {
   initialSetup = async () => {
     try {
       const { viewType, logLevel, refreshToken, brandName, logoUrl, _devApiLocation } = this.props
-      console.log('HELLO FROM RN!')
-      console.log({ refreshToken })
-      return
       const [sdkResponse] = await Promise.all([
         Storelink.configure({
           refreshToken,
@@ -29,8 +26,9 @@ class CooklistSDKWrapper extends React.Component {
           onInvoiceEvent: this.onInvoiceEvent,
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
           _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
-          // _devApiLocation: _devApiLocation,
-          _devApiLocation: 'http://192.168.0.10:8000/gql',
+          _devApiLocation: _devApiLocation,
+          // _devApiLocation: 'http://192.168.0.10:8000/gql',
+          // _devApiLocation: 'https://api.cooklist.com/gql',
           _logLevel: logLevel,
           brandName,
           logoUrl,
@@ -44,9 +42,9 @@ class CooklistSDKWrapper extends React.Component {
       }
       const deviceUuid = Storelink.getDeviceUuid()
       logEventDev(this.props.logLevel, `deviceUuid: ${deviceUuid}`)
-      this.onConfigurationSuccess({
-        deviceUuid,
-      })
+      // this.onConfigurationSuccess({
+      //   deviceUuid,
+      // })
     } catch (error) {
       logError(error)
     }
@@ -118,7 +116,7 @@ class CooklistSDKWrapper extends React.Component {
       }
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>TEST!!!123</Text>
+          <Text>TEST!!!12344444</Text>
           <ActivityIndicator />
         </View>
       )
