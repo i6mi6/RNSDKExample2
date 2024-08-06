@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.view.KeyEvent;
+
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -35,6 +37,7 @@ public class ReactNativeFragmentManager {
                 .addPackages(packages)
                 .setUseDeveloperSupport(false)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
+                .setJavaScriptExecutorFactory(new HermesExecutorFactory())
                 .build();
     }
 

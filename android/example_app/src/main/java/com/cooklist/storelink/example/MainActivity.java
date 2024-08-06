@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        launchBackgroundView();
+        launchBackgroundView();
 
         Button buttonLaunchSecondActivity = findViewById(R.id.button_launch_second_activity);
         buttonLaunchSecondActivity.setOnClickListener(new View.OnClickListener() {
