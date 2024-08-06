@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.view.KeyEvent;
-
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -12,17 +11,18 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.soloader.SoLoader;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReactNativeViewManager {
+public class ReactNativeFragmentManager {
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
+    private DefaultHardwareBackBtnHandler mDefaultBackButtonHandler;
 
-    public ReactNativeViewManager(Application application, Activity activity) {
+    public ReactNativeFragmentManager(Application application, Activity activity, DefaultHardwareBackBtnHandler defaultBackButtonHandler) {
         SoLoader.init(application, false);
+        this.mDefaultBackButtonHandler = defaultBackButtonHandler;
 
         List<ReactPackage> packages = new PackageList(application).getPackages();
         packages.add(new StorelinkPackage());
@@ -33,7 +33,7 @@ public class ReactNativeViewManager {
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModulePath("index")
                 .addPackages(packages)
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setUseDeveloperSupport(false)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
     }
@@ -48,7 +48,6 @@ public class ReactNativeViewManager {
         initialProps.putString("viewType", viewType.getStringValue());
         initialProps.putString("brandName", brandName);
         initialProps.putString("logoUrl", logoUrl);
-//        initialProps.putString("_devApiLocation", devApiLocation);
 
         if (functionParams != null) {
             Bundle functionParamsBundle = new Bundle();
@@ -70,7 +69,7 @@ public class ReactNativeViewManager {
 
     public void onResume(Activity activity) {
         if (mReactInstanceManager != null) {
-            mReactInstanceManager.onHostResume(activity, (DefaultHardwareBackBtnHandler) activity);
+            mReactInstanceManager.onHostResume(activity, mDefaultBackButtonHandler);
         }
     }
 

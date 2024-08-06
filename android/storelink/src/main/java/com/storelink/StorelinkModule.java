@@ -37,33 +37,33 @@ public class StorelinkModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void sendNotification(String notification, WritableMap params) {
-        Map<String, Object> event = new HashMap<>();
-        event.put("notification", notification);
-        if (params != null) {
-            Map<String, Object> paramsMap = params.toHashMap();
-            for (String key : paramsMap.keySet()) {
-                event.put(key, paramsMap.get(key));
-            }
-        }
-        EventManager.getInstance().postEvent(event);
+//        Map<String, Object> event = new HashMap<>();
+//        event.put("notification", notification);
+//        if (params != null) {
+//            Map<String, Object> paramsMap = params.toHashMap();
+//            for (String key : paramsMap.keySet()) {
+//                event.put(key, paramsMap.get(key));
+//            }
+//        }
+//        EventManager.getInstance().postEvent(event);
     }
 
     private void setupLiveDataObserver() {
-        Handler mainHandler = new Handler(Looper.getMainLooper());
-        mainHandler.post(() -> {
-            EventManager.getInstance().getEventLiveData().observeForever(new Observer<Map<String, Object>>() {
-                @Override
-                public void onChanged(Map<String, Object> event) {
-                    if (event != null && event.containsKey("notification")) {
-                        WritableMap params = new WritableNativeMap();
-                        for (Map.Entry<String, Object> entry : event.entrySet()) {
-                            params.putString(entry.getKey(), entry.getValue().toString());
-                        }
-                        sendEvent(EVENT_NAME, params);
-                    }
-                }
-            });
-        });
+//        Handler mainHandler = new Handler(Looper.getMainLooper());
+//        mainHandler.post(() -> {
+//            EventManager.getInstance().getEventLiveData().observeForever(new Observer<Map<String, Object>>() {
+//                @Override
+//                public void onChanged(Map<String, Object> event) {
+//                    if (event != null && event.containsKey("notification")) {
+//                        WritableMap params = new WritableNativeMap();
+//                        for (Map.Entry<String, Object> entry : event.entrySet()) {
+//                            params.putString(entry.getKey(), entry.getValue().toString());
+//                        }
+//                        sendEvent(EVENT_NAME, params);
+//                    }
+//                }
+//            });
+//        });
     }
 
     private void sendEvent(String eventName, WritableMap params) {

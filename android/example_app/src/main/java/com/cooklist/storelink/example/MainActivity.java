@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.storelink.StorelinkActivity;
-
+import com.storelink.ConnectOrUpdateStoreActivity;
+import com.storelink.StorelinkFragment;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        launchStorelinkActivity();
+//        launchBackgroundView();
 
         Button buttonLaunchSecondActivity = findViewById(R.id.button_launch_second_activity);
         buttonLaunchSecondActivity.setOnClickListener(new View.OnClickListener() {
@@ -31,31 +29,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void launchStorelinkActivity() {
-        Intent intent = new Intent(getApplicationContext(), StorelinkActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    private void launchBackgroundView() {
+        Bundle args = new Bundle();
+        args.putString("refreshToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5ODkxMzksIm9pZCI6MiwidmVyc2lvbiI6MSwianRpIjoiZjRkNGQzYTEtNzlkOC00MWQ3LTliMDYtZTk2MGU0MDFkODJmIiwiaXNzdWVkX2F0IjoxNzIyODk2NzE1LjIwMjg5OSwiZXhwaXJlc19hdCI6MTc1NDQzMjcxNS4yMDI4OTksInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.v0znSZXe_tIl-X1sRR3Vz2737pfBAcgDUU8mjHeau6Q");
+        args.putString("viewType", "BACKGROUND_TASK");
+        args.putString("logLevel", "DEV");
+        args.putString("brandName", "Cooklist");
+        args.putString("logoUrl", "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ");
+        args.putString("devApiLocation", "https://api.cooklist.com/gql");
 
-        intent.putExtra("refreshToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5ODkxMzksIm9pZCI6MiwidmVyc2lvbiI6MSwianRpIjoiZjRkNGQzYTEtNzlkOC00MWQ3LTliMDYtZTk2MGU0MDFkODJmIiwiaXNzdWVkX2F0IjoxNzIyODk2NzE1LjIwMjg5OSwiZXhwaXJlc19hdCI6MTc1NDQzMjcxNS4yMDI4OTksInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.v0znSZXe_tIl-X1sRR3Vz2737pfBAcgDUU8mjHeau6Q");
-        intent.putExtra("viewType", "BACKGROUND_TASK");
-        intent.putExtra("logLevel", "DEV");
-        intent.putExtra("brandName", "Cooklist");
-        intent.putExtra("logoUrl", "https://play-lh.googleusercontent.com/1MgS_1nBA858MqMzhu-cqeXpbkTC3tVrshkj79IAuKhDlN7LZXdH4ECw6wiwA86vUQ");
-        intent.putExtra("devApiLocation", "https://api.cooklist.com/gql");
-
-        // Example of passing a map - for simplicity, pass individual elements
-        // Ideally, you might want to serialize your map or use a Parcelable object
         HashMap<String, String> functionParams = new HashMap<>();
         functionParams.put("key1", "value1");
-        for (Map.Entry<String, String> entry : functionParams.entrySet()) {
-            intent.putExtra(entry.getKey(), entry.getValue());
-        }
+        args.putSerializable("functionParams", functionParams);
 
-        ContextCompat.startActivity(this, intent, null);
+        StorelinkFragment fragment = new StorelinkFragment();
+        fragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.fragment_background_container, fragment)
+            .commit();
     }
 
     private void launchConnectOrUpdateStoreActivity() {
-        Intent intent = new Intent(getApplicationContext(), StorelinkActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, ConnectOrUpdateStoreActivity.class);
 
         intent.putExtra("refreshToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5ODkxMzksIm9pZCI6MiwidmVyc2lvbiI6MSwianRpIjoiZjRkNGQzYTEtNzlkOC00MWQ3LTliMDYtZTk2MGU0MDFkODJmIiwiaXNzdWVkX2F0IjoxNzIyODk2NzE1LjIwMjg5OSwiZXhwaXJlc19hdCI6MTc1NDQzMjcxNS4yMDI4OTksInRva2VuX3R5cGUiOiJyZWZyZXNoIn0.v0znSZXe_tIl-X1sRR3Vz2737pfBAcgDUU8mjHeau6Q");
         intent.putExtra("viewType", "CONNECT_UPDATE_STORE");
@@ -68,6 +64,6 @@ public class MainActivity extends AppCompatActivity {
         functionParams.put("storeId", "U3RvcmVOb2RlOjM=");
         intent.putExtra("functionParams", functionParams);
 
-        ContextCompat.startActivity(this, intent, null);
+        startActivity(intent);
     }
 }

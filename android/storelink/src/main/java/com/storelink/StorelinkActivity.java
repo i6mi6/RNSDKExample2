@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StorelinkActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-    private ReactNativeViewManager mReactNativeViewManager;
+    private ReactNativeFragmentManager mReactNativeFragmentManager;
     private ReactRootView mReactRootView;
 
     @Override
@@ -29,9 +29,9 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
         String devApiLocation = intent.getStringExtra("devApiLocation");
         HashMap<String, String> functionParams = (HashMap<String, String>) intent.getSerializableExtra("functionParams");
 
-        mReactNativeViewManager = new ReactNativeViewManager(getApplication(), this);
-        mReactRootView = mReactNativeViewManager.createReactNativeView(this, refreshToken, viewType, logLevel, functionParams, brandName, logoUrl, devApiLocation);
-        setContentView(mReactRootView);
+//        mReactNativeFragmentManager = new ReactNativeFragmentManager(getApplication(), this);
+//        mReactRootView = mReactNativeFragmentManager.createReactNativeView(this, refreshToken, viewType, logLevel, functionParams, brandName, logoUrl, devApiLocation);
+//        setContentView(mReactRootView);
     }
 
     @Override
@@ -42,29 +42,29 @@ public class StorelinkActivity extends AppCompatActivity implements DefaultHardw
     @Override
     protected void onPause() {
         super.onPause();
-        mReactNativeViewManager.onPause(this);
+        mReactNativeFragmentManager.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mReactNativeViewManager.onResume(this);
+        mReactNativeFragmentManager.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mReactNativeViewManager.onDestroy(this);
+        mReactNativeFragmentManager.onDestroy(this);
     }
 
     @Override
     public void onBackPressed() {
-        mReactNativeViewManager.onBackPressed();
+        mReactNativeFragmentManager.onBackPressed();
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mReactNativeViewManager.onKeyUp(keyCode)) {
+        if (mReactNativeFragmentManager.onKeyUp(keyCode)) {
             return true;
         }
         return super.onKeyUp(keyCode, event);
