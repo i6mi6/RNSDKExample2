@@ -96,7 +96,7 @@ public class StorelinkViewController extends AppCompatActivity {
                 .setJSMainModulePath("index")
                 .addPackage(new MainReactPackage())
                 .addPackage(new StorelinkPackage())
-                .setUseDeveloperSupport(false)
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
     }

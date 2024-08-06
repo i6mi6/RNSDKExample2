@@ -2,9 +2,11 @@ package com.storelink;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.facebook.react.BuildConfig;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
@@ -35,7 +37,7 @@ public class ReactNativeViewManager {
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModulePath("index")
                 .addPackages(packages)
-                .setUseDeveloperSupport(false)
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
     }
