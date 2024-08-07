@@ -14,24 +14,40 @@ public class SDKHandler {
     private String brandName;
     private String logoUrl;
     private String devApiLocation;
-    private String logLevel;
+    private LogLevel logLevel;
 
-    public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl, String devApiLocation, String logLevel) {
+    public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl) {
+        this(context, refreshToken, brandName, logoUrl, null, null);
+    }
+
+    public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl, String _devApiLocation) {
+        this(context, refreshToken, brandName, logoUrl, _devApiLocation, null);
+    }
+
+    public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl, LogLevel _logLevel) {
+        this(context, refreshToken, brandName, logoUrl, null, _logLevel);
+    }
+
+    public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl, String _devApiLocation, LogLevel _logLevel) {
         this.context = context;
         this.refreshToken = refreshToken;
         this.brandName = brandName;
         this.logoUrl = logoUrl;
-        this.devApiLocation = devApiLocation;
-        this.logLevel = logLevel;
+        this.devApiLocation = _devApiLocation;
+        this.logLevel = _logLevel;
     }
 
     private Bundle getCommonBundle() {
         Bundle bundle = new Bundle();
         bundle.putString("refreshToken", refreshToken);
-        bundle.putString("logLevel", logLevel);
+        if (logLevel != null) {
+            bundle.putInt("logLevel", logLevel.getIntValue());
+        }
         bundle.putString("brandName", brandName);
         bundle.putString("logoUrl", logoUrl);
-        bundle.putString("devApiLocation", devApiLocation);
+        if (devApiLocation != null) {
+            bundle.putString("devApiLocation", devApiLocation);
+        }
         return bundle;
     }
 

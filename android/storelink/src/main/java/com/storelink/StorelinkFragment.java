@@ -22,7 +22,12 @@ public class StorelinkFragment extends Fragment implements DefaultHardwareBackBt
         if (getArguments() != null) {
             String refreshToken = getArguments().getString("refreshToken");
             ViewType viewType = ViewType.valueOf(getArguments().getString("viewType"));
-            LogLevel logLevel = LogLevel.valueOf(getArguments().getString("logLevel"));
+
+            LogLevel logLevel = null;
+            if (getArguments().containsKey("logLevel")) {
+                logLevel = LogLevel.values()[getArguments().getInt("logLevel") - 1];
+            }
+
             String brandName = getArguments().getString("brandName");
             String logoUrl = getArguments().getString("logoUrl");
             String devApiLocation = getArguments().getString("devApiLocation");
@@ -57,5 +62,4 @@ public class StorelinkFragment extends Fragment implements DefaultHardwareBackBt
     public void invokeDefaultOnBackPressed() {
         requireActivity().onBackPressed();
     }
-
 }
