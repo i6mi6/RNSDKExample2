@@ -3,18 +3,22 @@ package com.storelink;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
+import androidx.core.util.Consumer;
 
 public class SDKHandler {
     private Context context;
     private String refreshToken;
     private String brandName;
     private String logoUrl;
-    private String devApiLocation;
-    private LogLevel logLevel;
+    private String _devApiLocation;
+    private LogLevel _logLevel;
+    private Consumer<HashMap<String, Object>> onConfigurationSuccess;
+    private Consumer<HashMap<String, Object>> onStoreConnectionEvent;
+    private Consumer<HashMap<String, Object>> onInvoiceEvent;
+    private Consumer<HashMap<String, Object>> onCheckingStoreConnectionEvent;
 
     public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl) {
         this(context, refreshToken, brandName, logoUrl, null, null);
@@ -33,20 +37,44 @@ public class SDKHandler {
         this.refreshToken = refreshToken;
         this.brandName = brandName;
         this.logoUrl = logoUrl;
-        this.devApiLocation = _devApiLocation;
-        this.logLevel = _logLevel;
+        this._devApiLocation = _devApiLocation;
+        this._logLevel = _logLevel;
+    }
+
+    public void setDevApiLocation(String _devApiLocation) {
+        this._devApiLocation = _devApiLocation;
+    }
+
+    public void setLogLevel(LogLevel _logLevel) {
+        this._logLevel = _logLevel;
+    }
+
+    public void setOnConfigurationSuccess(Consumer<HashMap<String, Object>> onConfigurationSuccess) {
+        this.onConfigurationSuccess = onConfigurationSuccess;
+    }
+
+    public void setOnStoreConnectionEvent(Consumer<HashMap<String, Object>> onStoreConnectionEvent) {
+        this.onStoreConnectionEvent = onStoreConnectionEvent;
+    }
+
+    public void setOnInvoiceEvent(Consumer<HashMap<String, Object>> onInvoiceEvent) {
+        this.onInvoiceEvent = onInvoiceEvent;
+    }
+
+    public void setOnCheckingStoreConnectionEvent(Consumer<HashMap<String, Object>> onCheckingStoreConnectionEvent) {
+        this.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent;
     }
 
     private Bundle getCommonBundle() {
         Bundle bundle = new Bundle();
         bundle.putString("refreshToken", refreshToken);
-        if (logLevel != null) {
-            bundle.putInt("logLevel", logLevel.getIntValue());
+        if (_logLevel != null) {
+            bundle.putInt("logLevel", _logLevel.getIntValue());
         }
         bundle.putString("brandName", brandName);
         bundle.putString("logoUrl", logoUrl);
-        if (devApiLocation != null) {
-            bundle.putString("devApiLocation", devApiLocation);
+        if (_devApiLocation != null) {
+            bundle.putString("devApiLocation", _devApiLocation);
         }
         return bundle;
     }
@@ -54,9 +82,10 @@ public class SDKHandler {
     public Fragment getBackgroundView() {
         Bundle args = getCommonBundle();
         args.putString("viewType", ViewType.BACKGROUND_TASK.getStringValue());
-        
+
         StorelinkFragment fragment = new StorelinkFragment();
         fragment.setArguments(args);
+//        fragment.setCallbacks(onConfigurationSuccess, onStoreConnectionEvent, onInvoiceEvent, onCheckingStoreConnectionEvent);
         return fragment;
     }
 
