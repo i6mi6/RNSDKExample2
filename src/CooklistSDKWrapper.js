@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, NativeModules, Text, View } from 'react-native'
+import { ActivityIndicator, NativeModules, View } from 'react-native'
 import Storelink from 'react-native-storelink'
 import InnerContainer from './InnerContainer'
 import { EVENT_TYPES, VIEW_TYPE } from './constants'
@@ -116,7 +116,6 @@ class CooklistSDKWrapper extends React.Component {
       }
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>TEST!!!12344444</Text>
           <ActivityIndicator />
         </View>
       )
