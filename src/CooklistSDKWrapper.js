@@ -27,8 +27,6 @@ class CooklistSDKWrapper extends React.Component {
           onCheckingStoreConnectionEvent: this.onCheckingStoreConnectionEvent,
           _backgroundDisabled: viewType !== VIEW_TYPE.BACKGROUND_TASK,
           _devApiLocation: _devApiLocation,
-          // _devApiLocation: 'http://192.168.0.10:8000/gql',
-          // _devApiLocation: 'https://api.cooklist.com/gql',
           _logLevel: logLevel,
           brandName,
           logoUrl,
