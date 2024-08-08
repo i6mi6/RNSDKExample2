@@ -4,9 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-
+import android.os.Handler;
 import java.util.HashMap;
+import java.util.Map;
+
 import androidx.core.util.Consumer;
+import androidx.lifecycle.Observer;
+
+import android.os.Looper;
+
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 
 public class SDKHandler {
     private Context context;
@@ -19,6 +27,9 @@ public class SDKHandler {
     private Consumer<HashMap<String, Object>> onStoreConnectionEvent;
     private Consumer<HashMap<String, Object>> onInvoiceEvent;
     private Consumer<HashMap<String, Object>> onCheckingStoreConnectionEvent;
+    private boolean isConfigurationSuccessCalled = false;
+    
+    private static final String EVENT_NAME = "CooklistDataFromNative";
 
     public SDKHandler(Context context, String refreshToken, String brandName, String logoUrl) {
         this(context, refreshToken, brandName, logoUrl, null, null);
@@ -39,6 +50,7 @@ public class SDKHandler {
         this.logoUrl = logoUrl;
         this._devApiLocation = _devApiLocation;
         this._logLevel = _logLevel;
+        this.setupNotificationObservers();
     }
 
     public void setDevApiLocation(String _devApiLocation) {
@@ -63,6 +75,47 @@ public class SDKHandler {
 
     public void setOnCheckingStoreConnectionEvent(Consumer<HashMap<String, Object>> onCheckingStoreConnectionEvent) {
         this.onCheckingStoreConnectionEvent = onCheckingStoreConnectionEvent;
+    }
+
+    private void setupNotificationObservers() {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        mainHandler.post(() -> {
+            EventManager.getInstance().getEventLiveData().observeForever(new Observer<Map<String, Object>>() {
+                @Override
+                public void onChanged(Map<String, Object> event) {
+                    if (event != null) {
+                        String functionName = (String) event.get("functionName");
+                        if (functionName != null) {
+                            switch (functionName) {
+                                case "onConfigurationSuccess":
+                                    if (onConfigurationSuccess != null && !isConfigurationSuccessCalled) {
+                                        onConfigurationSuccess.accept((HashMap<String, Object>) event);
+                                        isConfigurationSuccessCalled = true; // Set the flag to true after the first call
+                                    }
+                                    break;
+                                case "onStoreConnectionEvent":
+                                    if (onStoreConnectionEvent != null) {
+                                        onStoreConnectionEvent.accept((HashMap<String, Object>) event);
+                                    }
+                                    break;
+                                case "onInvoiceEvent":
+                                    if (onInvoiceEvent != null) {
+                                        onInvoiceEvent.accept((HashMap<String, Object>) event);
+                                    }
+                                    break;
+                                case "onCheckingStoreConnectionEvent":
+                                    if (onCheckingStoreConnectionEvent != null) {
+                                        onCheckingStoreConnectionEvent.accept((HashMap<String, Object>) event);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            });
+        });
     }
 
     private Bundle getCommonBundle() {

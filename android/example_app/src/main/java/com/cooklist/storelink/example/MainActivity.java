@@ -2,6 +2,7 @@ package com.cooklist.storelink.example;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,24 +34,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void accept(HashMap<String, Object> stringObjectHashMap) {
                 // Handle the event here
+                Log.d("MainActivity", "Configuration Success Event: " + stringObjectHashMap.toString());
             }
         });
         sdkHandler.setOnInvoiceEvent(new Consumer<HashMap<String, Object>>() {
             @Override
             public void accept(HashMap<String, Object> stringObjectHashMap) {
                 // Handle the event here
+                Log.d("MainActivity", "Invoice Event: " + stringObjectHashMap.toString());
             }
         });
         sdkHandler.setOnCheckingStoreConnectionEvent(new Consumer<HashMap<String, Object>>() {
             @Override
             public void accept(HashMap<String, Object> stringObjectHashMap) {
                 // Handle the event here
+                Log.d("MainActivity", "Checking Store Connection Event: " + stringObjectHashMap.toString());
             }
         });
         sdkHandler.setOnStoreConnectionEvent(new Consumer<HashMap<String, Object>>() {
             @Override
             public void accept(HashMap<String, Object> stringObjectHashMap) {
                 // Handle the event here
+                Log.d("MainActivity", "Store Connection Event: " + stringObjectHashMap.toString());
             }
         });
 

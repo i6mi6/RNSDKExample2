@@ -51,28 +51,28 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onConfigurationSuccess = (payload) => {
-    // StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
-    //   functionName: 'onConfigurationSuccess',
-    //   ...payload,
-    // })
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+      functionName: 'onConfigurationSuccess',
+      ...payload,
+    })
     logEventDev(this.props.logLevel, `[REACT NATIVE] onConfigurationSuccess:`, payload)
   }
 
   onStoreConnectionEvent = ({ storeConnectionId, credentialsStatus }) => {
-    // StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
-    //   functionName: 'onStoreConnectionEvent',
-    //   storeConnectionId,
-    //   credentialsStatus,
-    // })
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+      functionName: 'onStoreConnectionEvent',
+      storeConnectionId,
+      credentialsStatus,
+    })
     logEventDev(this.props.logLevel, `[REACT NATIVE] onStoreConnectionEvent:`, { storeConnectionId, credentialsStatus })
   }
 
   onInvoiceEvent = ({ storeConnectionId, orderIds }) => {
-    // StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
-    //   functionName: 'onInvoiceEvent',
-    //   storeConnectionId,
-    //   orderIds,
-    // })
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+      functionName: 'onInvoiceEvent',
+      storeConnectionId,
+      orderIds,
+    })
     logEventDev(this.props.logLevel, `[REACT NATIVE] onInvoiceEvent:`, {
       storeConnectionId,
       orderIds,
@@ -80,10 +80,10 @@ class CooklistSDKWrapper extends React.Component {
   }
 
   onCheckingStoreConnectionEvent = (payload) => {
-    // StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
-    //   functionName: 'onCheckingStoreConnectionEvent',
-    //   ...(payload || {}),
-    // })
+    StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_EVENT, {
+      functionName: 'onCheckingStoreConnectionEvent',
+      ...(payload || {}),
+    })
     logEventDev(this.props.logLevel, `[REACT NATIVE] onCheckingStoreConnectionEvent:`, payload)
   }
 
@@ -93,10 +93,10 @@ class CooklistSDKWrapper extends React.Component {
       if (!viewUUID) {
         return
       }
-      // StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
-      //   viewUUID,
-      //   ...(payload || {}),
-      // })
+      StorelinkModule.sendNotification(EVENT_TYPES.COOKLIST_SDK_VIEW_COMPLETE_EVENT, {
+        viewUUID,
+        ...(payload || {}),
+      })
       logEventDev(this.props.logLevel, `[REACT NATIVE] onViewComplete:`, payload)
     } catch (error) {
       logError(this.props.logLevel, error)
